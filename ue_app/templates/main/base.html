@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tell your story to the world">
+    {% block title %}
+    <title>Ue - Home</title>
+    {% endblock %}
+    {% block stylesheet %}
+        <link rel="stylesheet" href="{% static 'css/main/base.css' %}">
+        <link rel="stylesheet" href="{% static 'css/main/scrollbar.css' %}">
+        <link rel="stylesheet" href="{% static 'css/main/tab.css' %}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,600;1,100;1,800&display=swap"
+            rel="stylesheet">
+        <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+        <script src="https://unpkg.com/wavesurfer.js"></script>
+    {% endblock %}
+</head>
+<body>
+    {% block header %}
+        <div class="header">
+            <nav>
+                <div class="navigation-bar">
+                    <div class="logo-menu nav-menu">
+                        <a href="{% url 'ue_app:home' %}"><div class="logo">ue</div></a>
+                        <div class="dropdown-menu icon-div">
+                            <box-icon name='grid-vertical'></box-icon>
+                        </div>
+                    </div>
+                    <div class="search-sign-in nav-menu">
+                        <div class="search icon-div">
+                            <box-icon name='search-alt-2'></box-icon>
+                        </div>
+                        <div class="user-sign icon-div">
+                            <box-icon name='user'></box-icon>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    {% endblock %}
+    {% block leftsidebar %}
+    <div class="recommender-channels left-sidbar">
+        <div class="recommended-accounts">
+            <div class="recommended-channels-head">
+                <div class="title">
+                    <h3>Recommended Channels</h3>
+                    <div class="expand-colapse body-icon">
+                        <div class="place-horizontal remove-element"><box-icon name='move-horizontal'></box-icon></div>
+                        <div class="collapse">
+                            <box-icon name='collapse-horizontal'></box-icon>
+                        </div>
+                        <div class="expand remove-element">
+                            <box-icon name='expand-horizontal'></box-icon>
+                        </div>
+            
+                    </div>
+                </div>
+            
+                <div class="collapse-title-popup-tag remove-element">
+                    <box-icon name='tag-alt'></box-icon>
+                </div>
+            </div>
+            <div class="recommended-accounts">
+                {% if channels %}
+                {% for account in channels %}
+                <div class="recommended-account-card">
+                    <div class="photo-name">
+                        <div class="account-image">
+                            <img src="{{account.profile.photo.url}}" alt="">
+                        </div>
+                        <div class="account-name">
+                            <p>{{account.display_name}}</p>
+                        </div>
+                    </div>
+            
+                    <div class="online-status-views">
+                        <div class="online-status"></div>
+                        <div class="views">
+                            <p>12.6K</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="no-content-available">
+                    <p>No Recommended Channel </p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <!-- <hr> -->
+        <div class="recommended-videos">
+            <div class="recommended-channels-head">
+                <div class="title">
+                    <h3>Popular Videos</h3>
+                </div>
+            </div>
+            <div class="popular-videos">
+                {% if videos %}
+                {% for video in videos %}
+                <a href="{{video.get_absolute_url}}">
+                    <div class="popular-video-card">
+                        <div class="video-display">
+                            <div class="video-cover">
+                                <video src="{{video.video_upload.url}}" controls ></video>
+                            </div>
+                        </div>
+                        <div class="video-status-views">
+                            <div class="video-title">
+                                <h5>{{video.title}}</h5>
+                            </div>
+                            <div class="video-name-views">
+                                <div class="channel-name">
+                                    <img src="{{video.author.profile.photo.url}}" alt="">
+                                    <p>{{video.author.display_name}}</p>
+                                </div>
+                                <div class="views">
+                                    <p>{{ video.views }} view{{ video.views|pluralize }}</p>
+                                </div>
+                            </div>
+                
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+                {% else %}
+                <div class="no-content-available">
+                    <p>No Video Available </p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <!-- <hr> -->
+        <div class="recommended-videos">
+            <div class="recommended-channels-head">
+                <div class="title">
+                    <h3>Popular Audios</h3>
+                </div>
+            </div>
+            <div class="popular-videos">
+                {% if audios %}
+                {% for audio in audios %}
+                <a href="{{audio.get_absolute_url}}">
+                    <div class="popular-video-card">
+                    <div class="video-display">
+                        <div class="audio-cover">
+                            <!-- <img src="{{audio.feature_image.url}}" alt=""> -->
+                            <box-icon class="play-btn" name='play'></box-icon>
+                            <box-icon class="pause-btn hide" name='pause'></box-icon>
+                            <div id="waveform"></div>
+                            <!-- <audio class="audio" src="{{audio.audio_upload.url}}" controls></audio> -->
+                            <script>
+                                let playBtn = document.querySelector('.play-btn');
+                                let pauseBtn = document.querySelector('.pause-btn');
+                                var wavesurfer = WaveSurfer.create({
+                                        container: '#waveform',
+                                        waveColor: 'violet',
+                                        progressColor: 'purple',
+                                        barWidth: 4,
+                                        responsive: true,
+                                        height: 50,
+                                        barRadius: 4,
+                                });
+                                wavesurfer.load('{{audio.audio_upload.url}}');
+                                playBtn.onclick = function(){
+                                    wavesurfer.playPause();
+                                    pauseBtn.classList.remove('hide');
+                                    playBtn.classList.add('hide');
+                                }
+                                pauseBtn.onclick = function () {
+                                    wavesurfer.playPause();
+                                    pauseBtn.classList.add('hide');
+                                    playBtn.classList.remove('hide');
+                                };
+                                wavesurfer.on('finish', function(){
+                                    pauseBtn.classList.add('hide');
+                                    playBtn.classList.remove('hide');
+                                    wavesurfer.stop();
+                                });
+                            </script>
+                        </div>
+                    </div>
+                    <div class="video-status-views">
+                        <div class="video-title">
+                            <h5>{{audio.title}}</h5>
+                        </div>
+                        <div class="video-name-views">
+                            <div class="channel-name">
+                                <img src="{{audio.author.profile.photo.url}}" alt="">
+                                <p>{{audio.author.display_name}}</p>
+                            </div>
+                            <div class="views">
+                                <p>{{ audio.views }} view{{ audio.views|pluralize }}</p>
+                            </div>
+                        </div>
+        
+                    </div>
+                    </div>
+                </a>
+                {% endfor %}
+                {% else %}
+                <div class="no-content-available">
+                    <p>No Audio Available </p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <!-- <hr> -->
+        <div class="recommended-videos">
+            <div class="recommended-channels-head">
+                <div class="title">
+                    <h3>Popular Articles</h3>
+                </div>
+            </div>
+            <div class="popular-videos">
+                {% if articles %}
+                {% for article in articles %}
+                <a href="{{article.get_absolute_url}}">
+                    <div class="popular-video-card">
+                        <div class="video-display">
+                            <div class="video-cover">
+                                <img src="{{article.feature_image.url}}" alt="">
+                                
+                            </div>
+                        </div>
+                        <div class="video-status-views">
+                            <div class="video-title">
+                                <h5>{{article.title}}</h5>
+                            </div>
+                            <div class="video-name-views">
+                                <div class="channel-name">
+                                    <img src="{{article.author.profile.photo.url}}" alt="">
+                                    <p>{{article.author.display_name}}</p>
+                                </div>
+                                <div class="views">
+                                    <p>{{ article.views }} view{{ article.views|pluralize }}</p>
+                                </div>
+                            </div>
+                
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+                {% else %}
+                <div class="no-content-available">
+                    <p>No Article Available </p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}
+
+    {% block category_display %}
+    <div class="category-section">
+        <div class="category-heading-body">
+            <h2>Popular Categories</h2>
+            <div class="category-container">
+            
+                {% if categories %}
+                {% for category in categories %}
+                
+                <a href="{% url 'ue_app:category_detail' category.slug %}">
+                    <div class="category-card">
+                        <img src="{{category.image.url}}" alt="category.name">
+                        <div>
+                            <h5>{{category.name}}</h5>
+                        </div>
+                        <p>470.5K views</p>
+                    </div>
+                </a>
+
+            
+                {% endfor %}
+                {% else %}
+                <p>No categories available</p>
+                {% endif %}
+            </div>
+        </div>
+        
+    </div>
+        
+    {% endblock category_display %}
+    <div class="content-container">
+        {% block content %}
+
+        {% endblock content %}  
+    </div>
+    
+
+    {% block footer %}
+    {% endblock footer %}
+
+    {% block script %}
+    <script src="{% static 'js/main/script.js' %}"></script>
+    <script src="{% static 'js/main/sidebar.js' %}"></script>
+    <script src="{% static 'js/main/tab.js' %}"></script>
+    <script src="{% static 'js/main/audio.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+        integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function(){
+            function updateText(textCount, newCount){
+                textCount.text(newCount);
+                
+            }
+            let likeTextCount = $(".likes-count");
+            $(".like-btn").click(function(e){
+                e.preventDefault()
+                let this_ = $(this);
+                let likeUrl = this_.attr("data-href");
+                let likeCount = parseInt(this_.attr("data-likes")) || 0;
+                let addLike = likeCount + 1;
+                let removeLike;
+                if(likeCount<=0){
+                    removeLike = 0;
+                }else {removeLike = likeCount - 1;}
+                
+                $.ajax({
+                    url: likeUrl,
+                    method: "GET",
+                    data: {},
+                    success: function (data) {
+                        // let newLikes;
+                        if (data.liked) {
+                            // newLikes = likeCount + 1;
+                            updateText(likeTextCount, addLike);
+                            $(".like-btn").html("<box-icon type='solid' name='like'></box-icon>");
+                        }
+                        else {
+                            // newLikes = likeCount - 1;
+                            updateText(likeTextCount, removeLike);
+                            $(".like-btn").html("<box-icon name='like'></box-icon>");
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                })
+            })
+            
+        })
+    </script>
+
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'image code',
+            toolbar: 'undo redo | link image | code',
+            /* enable title field in the Image dialog*/
+            image_title: true,
+            /* enable automatic uploads of images represented by blob or data URIs*/
+            automatic_uploads: true,
+            /*
+              URL of our upload handler (for more details check: https://www.tiny.cloud/docs/configure/file-image-upload/#images_upload_url)
+              images_upload_url: 'postAcceptor.php',
+              here we add custom filepicker only to Image dialog
+            */
+            file_picker_types: 'image',
+            /* and here's our custom image picker*/
+            file_picker_callback: function (cb, value, meta) {
+                var input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                input.setAttribute('accept', 'image/*');
+
+                /*
+                  Note: In modern browsers input[type="file"] is functional without
+                  even adding it to the DOM, but that might not be the case in some older
+                  or quirky browsers like IE, so you might want to add it to the DOM
+                  just in case, and visually hide it. And do not forget do remove it
+                  once you do not need it anymore.
+                */
+
+                input.onchange = function () {
+                    var file = this.files[0];
+
+                    var reader = new FileReader();
+                    reader.onload = function () {
+                        /*
+                          Note: Now we need to register the blob in TinyMCEs image blob
+                          registry. In the next release this part hopefully won't be
+                          necessary, as we are looking to handle it internally.
+                        */
+                        var id = 'blobid' + (new Date()).getTime();
+                        var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+                        var base64 = reader.result.split(',')[1];
+                        var blobInfo = blobCache.create(id, file, base64);
+                        blobCache.add(blobInfo);
+
+                        /* call the callback and populate the Title field with the file name */
+                        cb(blobInfo.blobUri(), { title: file.name });
+                    };
+                    reader.readAsDataURL(file);
+                };
+
+                input.click();
+            },
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+        });
+    </script>
+    {% endblock %}
+</body>
+</html>

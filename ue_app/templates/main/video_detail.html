@@ -1,0 +1,78 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load only_hours %}
+
+
+{% block content %}
+{% load social_share %}
+
+<div class="article-detail-container">
+    
+    
+    <div class="article-image">
+        <video src="{{video.video_upload.url}}" controls>
+    </div>
+    <div class="properties-articles">
+        <div class="article-title">
+            <h1>{{video.title}}</h1>
+        </div>
+        <hr>
+        <div class="article-attribute-container">
+            <div class="article-attr">
+                <div class="channel-name">
+                    <img src="{{video.author.profile.photo.url}}" alt="">
+                    <p>{{video.author.display_name}}</p>
+                </div>
+                <div class="date-posted views">
+                    <box-icon class="attr" name='calendar'></box-icon>
+                    <p><span>{{ video.date_uploaded|timesince|upto:',' }} ago</span></p>
+                </div>
+                <div class="views">
+                    <img src="{% static 'images/icons/eye_60px.png' %}" alt="">
+                    <p> <span>{{ video.views }} view{{ video.views|pluralize }}</span></p>
+                </div>
+            </div>
+            <div class="article-attr">
+                <div class="channel-name actions">
+                    <a class="like-btn" data-href="{{video.get_api_like_url}}" data-likes="{{video.likes.count}}" href="{{video.get_like_url}}">
+                        {% if video.already_liked %}
+                        <box-icon name='like' type="solid" animation='tada-hover'></box-icon>
+                        {% else %}
+                        <box-icon name='like' animation='tada-hover'></box-icon>
+                        {% endif %}
+                    </a>
+                    <p class="likes-count">{{video.likes.count}}</p>
+                </div>
+                <div class="date-posted actions share-container">
+                    <box-icon class="share-btn" name='share-alt'></box-icon>
+                    <div class="social-share-container">
+                        <div class="cancel-share"><box-icon name='x'></box-icon></div>
+                        {% post_to_facebook "Check out my story!" %}
+                        {% post_to_twitter "Check out my story!" '{{video.get_absolute_url}}' "Share on Twitter" %}
+                        {% post_to_gplus '{{video.get_absolute_url}}' "Share on Google+!" %}
+                        {% post_to_linkedin  '{{video.get_absolute_url}}' %}
+                        {% send_email "Check out my story!" '{{video.get_absolute_url}}' "Share via email" %}
+                        {% post_to_reddit "Check out my story!" '{{video.get_absolute_url}}' %}
+                        {% post_to_telegram "Check out my story!" '{{video.get_absolute_url}}' %}
+                        {% post_to_whatsapp "Check out my story!" "Share on WhatsApp" %}
+                        {% save_to_pinterest '{{video.get_absolute_url}}' %}
+                        {% add_pinterest_script %}
+                        {% copy_to_clipboard '{{video.get_absolute_url}}' "Copy to clipboard!" %}
+                        {% add_copy_script %}
+                    </div>
+                </div>
+                <div class="actions">
+                    <box-icon name='bookmark'></box-icon>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="article-body">
+        {{article.video_description}}
+    </div>
+
+</div>
+
+
+{% endblock content %}

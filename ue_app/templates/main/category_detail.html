@@ -1,0 +1,171 @@
+{% extends 'main/base.html' %}
+
+{% if category %}
+
+<div class="content-container">
+
+    {% block category_display %}
+        <div class="content-title">
+            <h1>{{category.name}}</h1>
+        </div>
+        
+        <div class="category-container-stats">
+            <div class="category-image-container">
+                <img src="{{category.image.url}}" alt="">
+            </div>
+            <div class="category-stats">
+                <p>Total Articles: <span>480</span></p>
+                <p>Total Audios: <span>480</span></p>
+                <p>Total Videos: <span>480</span></p>
+                <p>Total Views: <span>490.6K</span></p>
+            </div>
+        </div>
+    {% endblock category_display %}
+
+    {% block content %}
+
+    <div class="medium-tabs">
+        <div class="medium-tab tablinks" onclick="openCity(event, 'video')" id="defaultOpen">
+            <p> Videos</p>
+        </div>
+        <div class="medium-tab tablinks" onclick="openCity(event, 'article')">
+            <p>Articles</p>
+        </div>
+        <div class="medium-tab tablinks" onclick="openCity(event, 'audio')">
+            <p>Audios</p>
+        </div>
+    </div>
+
+
+    <div class="cart-section tabcontent" id="video">
+    <div class="popular-medium-container">
+        {% if videos %}
+        <div class="mediun-container">
+            {% for video in videos %}
+            {% if video.category.name == category.name %}
+            <div class="popular-videos-card-tab-display">
+                <div class="popular-video-card">
+                    <div class="video-display">
+                        <div class="video-cover">
+                            <video src="{{video.video_upload.url}}" controls></video>
+                        </div>
+                    </div>
+                    <div class="video-status-views">
+                        <div class="video-title">
+                            <h5>{{video.title}}</h5>
+                        </div>
+                        <div class="video-name-views">
+                            <div class="channel-name">
+                                <img src="{{video.author.photo.url}}" alt="">
+                                <p>{{video.author.display_name}}</p>
+                            </div>
+                            <div class="views">
+                                <p>12.6K</p>
+                            </div>
+                        </div>
+            
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <p>No video available </p>
+            {% endif %}
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>No video available</p>
+        {% endif %}
+    </div>
+    </div>
+
+    <div class="cart-section tabcontent" id="article">
+        <div class="popular-medium-container">
+            {% if articles %}
+            <div class="mediun-container">
+                {% for article in articles %}
+                {% if article.category.name == category.name %}
+                <div class="popular-videos-card-tab-display">
+                    <div class="popular-video-card">
+                        <div class="video-display">
+                            <div class="video-cover">
+                                <img src="{{article.feature_image.url}}">
+                            </div>
+                        </div>
+                        <div class="video-status-views">
+                            <div class="video-title">
+                                <h5>{{article.title}}</h5>
+                            </div>
+                            <div class="video-name-views">
+                                <div class="channel-name">
+                                    <img src="{{article.author.photo.url}}" alt="">
+                                    <p>{{article.author.display_name}}</p>
+                                </div>
+                                <div class="views">
+                                    <p>12.6K</p>
+                                </div>
+                            </div>
+        
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <p>No article available </p>
+                {% endif %}
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>No article available</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="cart-section tabcontent" id="audio">
+        <div class="popular-medium-container">
+            {% if audios %}
+            <div class="mediun-container">
+                {% for audio in audios %}
+                {% if audio.category.name == category.name %}
+                <div class="popular-videos-card-tab-display">
+                    <div class="popular-video-card">
+                        <div class="video-display">
+                            <div class="video-cover">
+                                <img src="{{audio.feature_image.url}}">
+                                <div class="audio-cover-1">
+                                    <audio src="{{audio.audio_upload.url}}" controls></audio>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="video-status-views">
+                            <div class="video-title">
+                                <h5>{{audio.title}}</h5>
+                            </div>
+                            <div class="video-name-views">
+                                <div class="channel-name">
+                                    <img src="{{audio.author.photo.url}}" alt="">
+                                    <p>{{audio.author.display_name}}</p>
+                                </div>
+                                <div class="views">
+                                    <p>12.6K</p>
+                                </div>
+                            </div>
+        
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <p>No audio available </p>
+                {% endif %}
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>No audio available</p>
+            {% endif %}
+        </div>
+    </div>
+    {% endblock content %}
+
+    {% else %}
+    <p>No content</p>
+    {% endif %}
+
+</div>

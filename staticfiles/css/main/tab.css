@@ -1,0 +1,7 @@
+/* Creating Tab in add to cart section */
+
+.tabcontent {
+    display: none;
+    animation: fadeEffect 1s;
+    /* Fading effect takes 1 second */
+}
