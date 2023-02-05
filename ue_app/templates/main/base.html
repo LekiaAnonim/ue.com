@@ -19,6 +19,7 @@
             rel="stylesheet">
         <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
         <script src="https://unpkg.com/wavesurfer.js"></script>
+        
     {% endblock %}
 </head>
 <body>
@@ -29,269 +30,360 @@
                     <div class="logo-menu nav-menu">
                         <a href="{% url 'ue_app:home' %}"><div class="logo">ue</div></a>
                         <div class="dropdown-menu icon-div">
-                            <box-icon name='grid-vertical'></box-icon>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
                         </div>
                     </div>
                     <div class="search-sign-in nav-menu">
-                        <div class="search icon-div">
-                            <box-icon name='search-alt-2'></box-icon>
+                        <div class="search">
+                            <!-- <box-icon name='search-alt-2'></box-icon> -->
+                            <input type="search" name="search" id="search" placeholder="Search Miroor" style="background: url('{% static 'images/icons/search-regular-24.png' %}') no-repeat right;">
                         </div>
-                        <div class="user-sign icon-div">
-                            <box-icon name='user'></box-icon>
+                    </div>
+                    <div class="search-sign-in nav-menu">
+                        
+                        <div class="sign-up icon-div">
+                            {% if request.user.is_authenticated %}
+                            {% if user.account.photo.url %}
+                            <div class="user-avatar" onclick="displayCard()">
+                                <img src="{{user.account.photo.url}}" alt="">
+                            </div>
+                            
+                            {% else %}
+                            <div class="user-avatar user-avatar-letter" onclick="displayCard()">
+                                <p>{{user.username|make_list|first|upper}}</p>
+                            </div>
+                            {% endif %}
+                            {% else %}
+                            <div class="user-avatar" onclick="displayCard()">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                    class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                                </svg>
+
+                            </div>
+                            {% endif %}
+                            <div class="user-avatar-account-card">
+                                <div class="cancel-sign" onclick="cancelsignMenu()">
+                                    <box-icon name='x'></box-icon>
+                                </div>
+                                <div class="login sign-auth">
+                                    <box-icon name='log-in-circle'></box-icon> <a href="{% url 'ue_app:login' %}">Log In</a>
+                                </div>
+                                <div class="logout sign-auth">
+                                    <box-icon name='log-out-circle'></box-icon> <a href="{% url 'ue_app:logout' %}?next={{request.path}}">Log Out</a>
+                                </div>
+                                <div class="signin sign-auth">
+                                    <a href="{% url 'ue_app:signup' %}"> Sign Up</a>
+                                </div>
+                            </div>
                         </div>
+                        
                     </div>
                 </div>
             </nav>
         </div>
     {% endblock %}
+    
     {% block leftsidebar %}
-    <div class="recommender-channels left-sidbar">
-        <div class="recommended-accounts">
-            <div class="recommended-channels-head">
-                <div class="title">
-                    <h3>Recommended Channels</h3>
-                    <div class="expand-colapse body-icon">
-                        <div class="place-horizontal remove-element"><box-icon name='move-horizontal'></box-icon></div>
-                        <div class="collapse">
-                            <box-icon name='collapse-horizontal'></box-icon>
-                        </div>
-                        <div class="expand remove-element">
-                            <box-icon name='expand-horizontal'></box-icon>
-                        </div>
-            
-                    </div>
-                </div>
-            
-                <div class="collapse-title-popup-tag remove-element">
-                    <box-icon name='tag-alt'></box-icon>
-                </div>
-            </div>
+        <div class="recommender-channels left-sidbar">
             <div class="recommended-accounts">
-                {% if channels %}
-                {% for account in channels %}
-                <div class="recommended-account-card">
-                    <div class="photo-name">
-                        <div class="account-image">
-                            <img src="{{account.profile.photo.url}}" alt="">
-                        </div>
-                        <div class="account-name">
-                            <p>{{account.display_name}}</p>
-                        </div>
-                    </div>
-            
-                    <div class="online-status-views">
-                        <div class="online-status"></div>
-                        <div class="views">
-                            <p>12.6K</p>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-                {% else %}
-                <div class="no-content-available">
-                    <p>No Recommended Channel </p>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-        <!-- <hr> -->
-        <div class="recommended-videos">
-            <div class="recommended-channels-head">
-                <div class="title">
-                    <h3>Popular Videos</h3>
-                </div>
-            </div>
-            <div class="popular-videos">
-                {% if videos %}
-                {% for video in videos %}
-                <a href="{{video.get_absolute_url}}">
-                    <div class="popular-video-card">
-                        <div class="video-display">
-                            <div class="video-cover">
-                                <video src="{{video.video_upload.url}}" controls ></video>
+                <div class="recommended-channels-head">
+                    <div class="title">
+                        <h3>Featured Channels</h3>
+                        <div class="expand-colapse body-icon">
+                            <div class="place-horizontal remove-element"><box-icon name='move-horizontal'></box-icon></div>
+                            <div class="collapse">
+                                <box-icon name='collapse-horizontal'></box-icon>
                             </div>
-                        </div>
-                        <div class="video-status-views">
-                            <div class="video-title">
-                                <h5>{{video.title}}</h5>
-                            </div>
-                            <div class="video-name-views">
-                                <div class="channel-name">
-                                    <img src="{{video.author.profile.photo.url}}" alt="">
-                                    <p>{{video.author.display_name}}</p>
-                                </div>
-                                <div class="views">
-                                    <p>{{ video.views }} view{{ video.views|pluralize }}</p>
-                                </div>
+                            <div class="expand remove-element">
+                                <box-icon name='expand-horizontal'></box-icon>
                             </div>
                 
                         </div>
                     </div>
-                </a>
-                {% endfor %}
-                {% else %}
-                <div class="no-content-available">
-                    <p>No Video Available </p>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-        <!-- <hr> -->
-        <div class="recommended-videos">
-            <div class="recommended-channels-head">
-                <div class="title">
-                    <h3>Popular Audios</h3>
-                </div>
-            </div>
-            <div class="popular-videos">
-                {% if audios %}
-                {% for audio in audios %}
-                <a href="{{audio.get_absolute_url}}">
-                    <div class="popular-video-card">
-                    <div class="video-display">
-                        <div class="audio-cover">
-                            <!-- <img src="{{audio.feature_image.url}}" alt=""> -->
-                            <box-icon class="play-btn" name='play'></box-icon>
-                            <box-icon class="pause-btn hide" name='pause'></box-icon>
-                            <div id="waveform"></div>
-                            <!-- <audio class="audio" src="{{audio.audio_upload.url}}" controls></audio> -->
-                            <script>
-                                let playBtn = document.querySelector('.play-btn');
-                                let pauseBtn = document.querySelector('.pause-btn');
-                                var wavesurfer = WaveSurfer.create({
-                                        container: '#waveform',
-                                        waveColor: 'violet',
-                                        progressColor: 'purple',
-                                        barWidth: 4,
-                                        responsive: true,
-                                        height: 50,
-                                        barRadius: 4,
-                                });
-                                wavesurfer.load('{{audio.audio_upload.url}}');
-                                playBtn.onclick = function(){
-                                    wavesurfer.playPause();
-                                    pauseBtn.classList.remove('hide');
-                                    playBtn.classList.add('hide');
-                                }
-                                pauseBtn.onclick = function () {
-                                    wavesurfer.playPause();
-                                    pauseBtn.classList.add('hide');
-                                    playBtn.classList.remove('hide');
-                                };
-                                wavesurfer.on('finish', function(){
-                                    pauseBtn.classList.add('hide');
-                                    playBtn.classList.remove('hide');
-                                    wavesurfer.stop();
-                                });
-                            </script>
-                        </div>
+                
+                    <div class="collapse-title-popup-tag remove-element">
+                        <box-icon name='tag-alt'></box-icon>
                     </div>
-                    <div class="video-status-views">
-                        <div class="video-title">
-                            <h5>{{audio.title}}</h5>
-                        </div>
-                        <div class="video-name-views">
-                            <div class="channel-name">
-                                <img src="{{audio.author.profile.photo.url}}" alt="">
-                                <p>{{audio.author.display_name}}</p>
+                </div>
+                <div class="recommended-accounts">
+                    {% if channels %}
+                    {% for account in channels %}
+                    <div class="recommended-account-card">
+                        <div class="photo-name">
+                            <div class="account-image">
+                                <img data-title="Elliot Fu" data-content="Elliot has been a member since July 2012" class="ui avatar image" src="{{account.profile.photo.url}}" alt="">
                             </div>
+                            <div class="account-name">
+                                <p>{{account.display_name}}</p>
+                            </div>
+                        </div>
+                
+                        <div class="online-status-views">
+                            <div class="online-status"></div>
                             <div class="views">
-                                <p>{{ audio.views }} view{{ audio.views|pluralize }}</p>
+                                <p>12.6K</p>
                             </div>
                         </div>
-        
                     </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="no-content-available">
+                        <p>No Recommended Channel </p>
                     </div>
-                </a>
-                {% endfor %}
-                {% else %}
-                <div class="no-content-available">
-                    <p>No Audio Available </p>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-        <!-- <hr> -->
-        <div class="recommended-videos">
-            <div class="recommended-channels-head">
-                <div class="title">
-                    <h3>Popular Articles</h3>
+                    {% endif %}
                 </div>
             </div>
-            <div class="popular-videos">
-                {% if articles %}
-                {% for article in articles %}
-                <a href="{{article.get_absolute_url}}">
-                    <div class="popular-video-card">
+            <!-- <hr> -->
+            <div class="recommended-videos">
+                <div class="recommended-channels-head">
+                    <div class="title">
+                        <h3>Popular Videos</h3>
+                    </div>
+                </div>
+                <div class="popular-videos">
+                    {% if videos %}
+                    {% for video in videos %}
+                    <a href="{{video.get_absolute_url}}">
+                        <div class="popular-video-card">
+                            <div class="video-display">
+                                <div class="video-cover">
+                                    <video src="{{video.video_upload.url}}" controls ></video>
+                                </div>
+                            </div>
+                            <div class="video-status-views">
+                                <div class="video-title">
+                                    <h5>{{video.title}}</h5>
+                                </div>
+                                <div class="video-name-views">
+                                    <div class="channel-name">
+                                        <img src="{{video.author.profile.photo.url}}" alt="">
+                                        <p>{{video.author.display_name}}</p>
+                                    </div>
+                                    <div class="views">
+                                        <p>{{ video.views }} view{{ video.views|pluralize }}</p>
+                                    </div>
+                                </div>
+                    
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                    {% else %}
+                    <div class="no-content-available">
+                        <p>No Video Available </p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <!-- <hr> -->
+            <div class="recommended-videos">
+                <div class="recommended-channels-head">
+                    <div class="title">
+                        <h3>Popular Audios</h3>
+                    </div>
+                </div>
+                <div class="popular-videos">
+                    {% if audios %}
+                    {% for audio in audios %}
+                    <a href="{{audio.get_absolute_url}}">
+                        <div class="popular-video-card">
                         <div class="video-display">
-                            <div class="video-cover">
-                                <img src="{{article.feature_image.url}}" alt="">
-                                
+                            <div class="audio-cover">
+                                <!-- <img src="{{audio.feature_image.url}}" alt=""> -->
+                                <box-icon class="play-btn" name='play'></box-icon>
+                                <box-icon class="pause-btn hide" name='pause'></box-icon>
+                                <div id="waveform"></div>
+                                <!-- <audio class="audio" src="{{audio.audio_upload.url}}" controls></audio> -->
+                                <script>
+                                    let playBtn = document.querySelector('.play-btn');
+                                    let pauseBtn = document.querySelector('.pause-btn');
+                                    var wavesurfer = WaveSurfer.create({
+                                            container: '#waveform',
+                                            waveColor: 'violet',
+                                            progressColor: 'purple',
+                                            barWidth: 4,
+                                            responsive: true,
+                                            height: 50,
+                                            barRadius: 4,
+                                    });
+                                    wavesurfer.load('{{audio.audio_upload.url}}');
+                                    playBtn.onclick = function(){
+                                        wavesurfer.playPause();
+                                        pauseBtn.classList.remove('hide');
+                                        playBtn.classList.add('hide');
+                                    }
+                                    pauseBtn.onclick = function () {
+                                        wavesurfer.playPause();
+                                        pauseBtn.classList.add('hide');
+                                        playBtn.classList.remove('hide');
+                                    };
+                                    wavesurfer.on('finish', function(){
+                                        pauseBtn.classList.add('hide');
+                                        playBtn.classList.remove('hide');
+                                        wavesurfer.stop();
+                                    });
+                                </script>
                             </div>
                         </div>
                         <div class="video-status-views">
                             <div class="video-title">
-                                <h5>{{article.title}}</h5>
+                                <h5>{{audio.title}}</h5>
                             </div>
                             <div class="video-name-views">
                                 <div class="channel-name">
-                                    <img src="{{article.author.profile.photo.url}}" alt="">
-                                    <p>{{article.author.display_name}}</p>
+                                    <img src="{{audio.author.profile.photo.url}}" alt="">
+                                    <p>{{audio.author.display_name}}</p>
                                 </div>
                                 <div class="views">
-                                    <p>{{ article.views }} view{{ article.views|pluralize }}</p>
+                                    <p>{{ audio.views }} view{{ audio.views|pluralize }}</p>
                                 </div>
                             </div>
-                
+            
                         </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                    {% else %}
+                    <div class="no-content-available">
+                        <p>No Audio Available </p>
                     </div>
-                </a>
-                {% endfor %}
-                {% else %}
-                <div class="no-content-available">
-                    <p>No Article Available </p>
+                    {% endif %}
                 </div>
-                {% endif %}
+            </div>
+            <!-- <hr> -->
+            <div class="recommended-videos">
+                <div class="recommended-channels-head">
+                    <div class="title">
+                        <h3>Popular Articles</h3>
+                    </div>
+                </div>
+                <div class="popular-videos">
+                    {% if articles %}
+                    {% for article in articles %}
+                    <a href="{{article.get_absolute_url}}">
+                        <div class="popular-video-card">
+                            <div class="video-display">
+                                <div class="video-cover">
+                                    <img src="{{article.feature_image.url}}" alt="">
+                                    
+                                </div>
+                            </div>
+                            <div class="video-status-views">
+                                <div class="video-title">
+                                    <h5>{{article.title}}</h5>
+                                </div>
+                                <div class="video-name-views">
+                                    <div class="channel-name">
+                                        <img src="{{article.author.profile.photo.url}}" alt="">
+                                        <p>{{article.author.display_name}}</p>
+                                    </div>
+                                    <div class="views">
+                                        <p>{{ article.views }} view{{ article.views|pluralize }}</p>
+                                    </div>
+                                </div>
+                    
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                    {% else %}
+                    <div class="no-content-available">
+                        <p>No Article Available </p>
+                    </div>
+                    {% endif %}
+                </div>
             </div>
         </div>
-    </div>
-
     {% endblock %}
 
-    {% block category_display %}
-    <div class="category-section">
-        <div class="category-heading-body">
-            <h2>Popular Categories</h2>
-            <div class="category-container">
-            
-                {% if categories %}
-                {% for category in categories %}
-                
-                <a href="{% url 'ue_app:category_detail' category.slug %}">
-                    <div class="category-card">
-                        <img src="{{category.image.url}}" alt="category.name">
-                        <div>
-                            <h5>{{category.name}}</h5>
-                        </div>
-                        <p>470.5K views</p>
-                    </div>
-                </a>
-
-            
-                {% endfor %}
-                {% else %}
-                <p>No categories available</p>
-                {% endif %}
-            </div>
-        </div>
-        
-    </div>
-        
-    {% endblock category_display %}
     <div class="content-container">
-        {% block content %}
+        <div class="content-page">
+            {% block start_banner %}
+            <div class="banner" style="background: url('{% static 'images/image/360_F_346588752_w91yyRbl1nzpZI1PetGQF1896jsYoLkb.jpg' %}')">
+                <div class="cancel-banner" onclick="cancelBanner()">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                        class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </div>
+                <div class="welcome-banner banner-1">
+                    <img src="{% static 'images/image/capture-banner.png' %}" alt="">
+                    <div class="welcome-banner-text">
+                        <h3>Let the world hear your story</h3>
+                        <p>A saner world through shared stories</p>
+                    </div>
+                </div>
+                <div class="welcome-banner banner-2">
+                    <img src="{% static 'images/image/saner-world-with-miroor.png' %}" alt="">
+                    <div class="welcome-banner-text">
+                        <h3>Inspire someone today</h3>
+                        <p>Nothing motivates more than stories</p>
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
 
-        {% endblock content %}  
+            {% block category_display %}
+            <div class="category-section">
+                <div class="category-heading-body">
+                    <h2>Popular Categories</h2>
+                    <div class="category-container">
+            
+                        {% if categories %}
+                        {% for category in categories %}
+            
+                        <a href="{% url 'ue_app:category_detail' category.slug %}">
+                            <div class="category-card">
+                                <img src="{{category.image.url}}" alt="category.name">
+                                <div>
+                                    <h5>{{category.name}}</h5>
+                                </div>
+                                <p>470.5K views</p>
+                            </div>
+                        </a>
+            
+            
+                        {% endfor %}
+                        {% else %}
+                        <p>No categories available</p>
+                        {% endif %}
+                    </div>
+                </div>   
+            </div>
+            {% endblock category_display %}
+
+            {% block messages %} 
+            {% if messages %} 
+            {% for message in messages %}
+            <div class="message-alert">
+                <div class="cancel-banner" onclick="cancelMessage()">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                        class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </div>
+                {% if message.level_tag == 'error' %}
+                <img src="{% static 'images/image/icons8-box-important.gif' %}" alt="">
+                {% else %}
+                <img src="{% static 'images/image/taxi-handshake.gif' %}" alt="">
+                {% endif %}
+                <p>{{ message }}</p>
+                
+            </div>
+            {% endfor %} 
+            {% endif %} 
+            {% endblock messages %}
+
+            {% block content %}
+            
+            {% endblock content %}
+        </div> 
     </div>
     
 
@@ -349,7 +441,7 @@
             
         })
     </script>
-
+<!-- 
     <script>
         tinymce.init({
             selector: 'textarea',
@@ -405,7 +497,7 @@
             },
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
         });
-    </script>
+    </script> -->
     {% endblock %}
 </body>
 </html>

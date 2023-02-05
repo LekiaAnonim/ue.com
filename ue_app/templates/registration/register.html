@@ -1,44 +1,56 @@
-{% extends 'base_generic.html' %}
-{% load static %}
+{% extends 'main/base.html' %}
 
+{% block content %}
 
-
-
-
-{% block showcase %}
-
-{% endblock showcase %}
-
-{% block sidebar %}
-
-{% endblock sidebar %}
-
-<body>
-    {% block content %}
-    
-    <div class="sign-up-container" style="background: #000;">
+<div class="display-sign-container" style="z-index: 1000;>
+    <div class="sign-up-container">
+        <a href="{% url 'ue_app:home' %}"><div class="cancel-sign">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </div></a>
         <div class="sign-up-card">
-            <h1 class="center">REGISTER</h1>
-            <form action="" method="post" novalidate>
+            <h1 class="center">Welcome to Miroor</h1>
+            {{register_form.errors}}
+            <form action="{% url 'ue_app:signup' %}" method="post" novalidate>
                 {% csrf_token %}
                 <div class="form-container">
-                    {{register_form}}
-                    <!-- <div class="g-recaptcha" data-sitekey="your_site_key"></div>
-                    <br /> -->
+                    {% for field in register_form %}
+                    <div class="fieldWrapper">
+                        {% if field.errors %}
+                        <ul>
+                            {% for error in field.errors %}
+                            <li class="error"><strong>{{error|escape}}</strong></li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {{field.label_tag}}
+                        <br>
+                        {{field}}
+                        {% if field.help_text %}
+                        <p class="help">{{field.help_text|safe}}</p>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
                 </div>
-    
-                <input class="sign-up-button" type="submit" value="Next">
+                <input class="sign-up-button" type="submit" value="Submit">
             </form>
-            <hr />
+            <div class="showpassword-container">
+                <input type="checkbox" onclick="showPassword(this)">
+                <p class="showpassword-text">Show Password</p>
+            </div>
+            <!-- <hr /> -->
             <div class="text-center">
-                <a class="small text-info" href="{% url 'login' %}">Already Have an Account!</a>
+                <a class="small text-info" href="{% url 'ue_app:login' %}">Already Have an Account!</a>
             </div>
             <div class="text-center">
-                <a class="small text-info" href="{% url 'showcase:index' %}">
+                <a class="small text-info" href="{% url 'ue_app:home' %}">
                     Home
                 </a>
             </div>
         </div>
     </div>
-    {% endblock content %}
-</body>
+</div>
+
+{% endblock content %}

@@ -38,44 +38,45 @@
 
 
     <div class="cart-section tabcontent" id="video">
-    <div class="popular-medium-container">
-        {% if videos %}
-        <div class="mediun-container">
-            {% for video in videos %}
-            {% if video.category.name == category.name %}
-            <div class="popular-videos-card-tab-display">
-                <div class="popular-video-card">
-                    <div class="video-display">
-                        <div class="video-cover">
-                            <video src="{{video.video_upload.url}}" controls></video>
-                        </div>
-                    </div>
-                    <div class="video-status-views">
-                        <div class="video-title">
-                            <h5>{{video.title}}</h5>
-                        </div>
-                        <div class="video-name-views">
-                            <div class="channel-name">
-                                <img src="{{video.author.photo.url}}" alt="">
-                                <p>{{video.author.display_name}}</p>
-                            </div>
-                            <div class="views">
-                                <p>12.6K</p>
+        <div class="popular-medium-container">
+            {% if videos %}
+            <div class="mediun-container">
+                {% for video in videos %}
+                {% if video.category.name == category.name %}
+                <div class="popular-videos-card-tab-display">
+                    <a href="{{video.get_absolute_url}}">
+                        <div class="popular-video-card">
+                        <div class="video-display">
+                            <div class="video-cover">
+                                <video src="{{video.video_upload.url}}" controls></video>
                             </div>
                         </div>
-            
-                    </div>
+                        <div class="video-status-views">
+                            <div class="video-title">
+                                <h5>{{video.title}}</h5>
+                            </div>
+                            <div class="video-name-views">
+                                <div class="channel-name">
+                                    <img src="{{video.author.profile.photo.url}}" alt="">
+                                    <p>{{video.author.display_name}}</p>
+                                </div>
+                                <div class="views">
+                                    <p>{{ video.views }} view{{ video.views|pluralize }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </a>
                 </div>
+                {% else %}
+                <p></p>
+                {% endif %}
             </div>
+            {% endfor %}
             {% else %}
-            <p>No video available </p>
+            <p>No video available</p>
             {% endif %}
         </div>
-        {% endfor %}
-        {% else %}
-        <p>No video available</p>
-        {% endif %}
-    </div>
     </div>
 
     <div class="cart-section tabcontent" id="article">
@@ -85,31 +86,33 @@
                 {% for article in articles %}
                 {% if article.category.name == category.name %}
                 <div class="popular-videos-card-tab-display">
-                    <div class="popular-video-card">
-                        <div class="video-display">
-                            <div class="video-cover">
-                                <img src="{{article.feature_image.url}}">
-                            </div>
-                        </div>
-                        <div class="video-status-views">
-                            <div class="video-title">
-                                <h5>{{article.title}}</h5>
-                            </div>
-                            <div class="video-name-views">
-                                <div class="channel-name">
-                                    <img src="{{article.author.photo.url}}" alt="">
-                                    <p>{{article.author.display_name}}</p>
-                                </div>
-                                <div class="views">
-                                    <p>12.6K</p>
+                    <a href="{{article.get_absolute_url}}">
+                        <div class="popular-video-card">
+                            <div class="video-display">
+                                <div class="video-cover">
+                                    <img src="{{article.feature_image.url}}">
                                 </div>
                             </div>
-        
+                            <div class="video-status-views">
+                                <div class="video-title">
+                                    <h5>{{article.title}}</h5>
+                                </div>
+                                <div class="video-name-views">
+                                    <div class="channel-name">
+                                        <img src="{{article.author.profile.photo.url}}" alt="">
+                                        <p>{{article.author.display_name}}</p>
+                                    </div>
+                                    <div class="views">
+                                        <p>{{ article.views }} view{{ article.views|pluralize }}</p>
+                                    </div>
+                                </div>
+            
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 {% else %}
-                <p>No article available </p>
+                <p></p>
                 {% endif %}
             </div>
             {% endfor %}
@@ -125,7 +128,8 @@
             <div class="mediun-container">
                 {% for audio in audios %}
                 {% if audio.category.name == category.name %}
-                <div class="popular-videos-card-tab-display">
+                <a href="{{audio.get_absolute_url}}">
+                    <div class="popular-videos-card-tab-display">
                     <div class="popular-video-card">
                         <div class="video-display">
                             <div class="video-cover">
@@ -141,17 +145,18 @@
                             </div>
                             <div class="video-name-views">
                                 <div class="channel-name">
-                                    <img src="{{audio.author.photo.url}}" alt="">
+                                    <img src="{{audio.author.profile.photo.url}}" alt="">
                                     <p>{{audio.author.display_name}}</p>
                                 </div>
                                 <div class="views">
-                                    <p>12.6K</p>
+                                   <p>{{ audio.views }} view{{ audio.views|pluralize }}</p>
                                 </div>
                             </div>
         
                         </div>
                     </div>
-                </div>
+                    </div>
+                </a>
                 {% else %}
                 <p>No audio available </p>
                 {% endif %}

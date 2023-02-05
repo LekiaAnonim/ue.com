@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.urls import reverse
 
 class Profile(models.Model):
     user = models.OneToOneField(
@@ -26,6 +26,8 @@ class Profile(models.Model):
     def __str__(self):
         return f"@{self.user.username}"
 
+    def get_absolute_url(self):
+        return reverse('ue_app:customer-update', kwargs={'pk': self.pk})
 
 class Channel(models.Model):
     profile = models.ForeignKey(Profile, null=True, related_name="channel", on_delete=models.SET_NULL)

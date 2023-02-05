@@ -4,6 +4,10 @@ from ue_app.views.main import article_view
 from ue_app.views.main import audio_view
 from ue_app.views.main import category_view
 from ue_app.views.main import video_view
+from ue_app.views.authentication import registration_view
+from ue_app.views.authentication import login_view
+from ue_app.views.authentication import password_reset_view
+from django.contrib.auth import views as auth_views
 
 app_name = "ue_app"
 
@@ -104,7 +108,7 @@ urlpatterns = [
         name='video_update'
     ),
 
-    # Category URl 
+    # Category URl
     path(
         route='categories/',
         view=category_view.CategoryListView.as_view(),
@@ -142,4 +146,49 @@ urlpatterns = [
     ),
 
     # Channel
+
+    # Signup and SignIn URL
+    path(
+        route='signup',
+        view=registration_view.UserRegisterView.as_view(),
+        name='signup'
+    ),
+    path(
+        route='email-verification-confirm',
+        view=registration_view.EmailVerificationConfirm.as_view(),
+        name='email_verification_confirm'
+    ),
+    path(
+        route='email-verification/invalid-link',
+        view=registration_view.EmailVerificationInvalid.as_view(),
+        name='email_verification_invalid'
+    ),
+    path(
+        route='login',
+        view=login_view.UserLoginView.as_view(),
+        name='login'
+    ),
+    path('logout', auth_views.LogoutView.as_view(), name='logout'),
+
+    # Reset Password URLS
+
+    path(
+        route='reset-password',
+        view=password_reset_view.PasswordResetView.as_view(),
+        name='password_reset'
+    ),
+    path('password-reset/done/', password_reset_view.PasswordResetDoneView.as_view(),
+         name='password_reset_done'),
+    path('password-reset/<uidb64>/<token>/',
+         password_reset_view.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('password-reset_complete/done/', password_reset_view.PasswordResetCompleteView.as_view(),
+         name='password_reset_complete'),
+    path('password-change', password_reset_view.PasswordChangeView.as_view(),
+         name='password_change'),
+    path('password-change/done/', password_reset_view.PasswordChangeDoneView.as_view(),
+         name='password_change_done'),
+
+    path('activate/<uidb64>/<token>/',
+         registration_view.activate, name='activate'),
+
 ]

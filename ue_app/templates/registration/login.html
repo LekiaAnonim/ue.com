@@ -1,48 +1,46 @@
-{% extends "base_generic.html" %}
-
-{% block showcase %}
-
-{% endblock showcase %}
-{% load i18n %}
-
-{% block sidebar %}
-
-{% endblock sidebar %}
-
-
+{% extends 'main/base.html' %}
 
 {% block content %}
 
-<div class="sign-up-container" style="background: #000;">
-    <div class="sign-up-card">
-        {% if form.errors %}
-        <p>Your username and password didn't match. Please try again.</p>
-        {% endif %}
-        
-        {% if next %}
-        {% if user.is_authenticated %}
-        <p>Your account doesn't have access to this page. To proceed,
-            please login with an account that has access.</p>
-        {% else %}
-        <p>Please login to see this page.</p>
-        {% endif %}
-        {% endif %}
-        <form method="post" action="{% url 'login' %}">
-            {% csrf_token %}
-            <div class="form-container">
-                {{ form }}
+<div class="display-sign-container" style="z-index: 1000;">
+    <div class="sign-up-container">
+        <a href="{% url 'ue_app:home' %}">
+            <div class="cancel-sign">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                    class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
             </div>
-            
-            <!-- <div class="g-recaptcha" data-sitekey="your_site_key"></div>
-            <br /> -->
-            <input class="sign-up-button" type="submit" value="login" />
-            <input type="hidden" name="next" value="{{ next }}" />
-        </form>
-
-{# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="{% url 'password_reset' %}" style="color: #0096FF; text-decoration: underline;">Lost password?</a></p>
+        </a>
+        <div class="sign-up-card">
+            {% if login_form.errors %}
+            <p>Your username and password didn't match. Please try again.</p>
+            {% endif %}
+    
+            {% if next %}
+            {% if user.is_authenticated %}
+            <p>Your account doesn't have access to this page. To proceed,
+                please login with an account that has access.</p>
+            {% else %}
+            <p>Please login to see this page.</p>
+            {% endif %}
+            {% endif %}
+            <form method="post" action="{% url 'ue_app:login' %}">
+                {% csrf_token %}
+                <div class="form-container">
+                    {{ login_form }}
+                </div>
+    
+                <!-- <div class="g-recaptcha" data-sitekey="your_site_key"></div>
+                <br /> -->
+                <input class="sign-up-button" type="submit" value="Login" />
+                <input type="hidden" name="next" value="{{ next }}" />
+            </form>
+    
+            {# Assumes you setup the password_reset view in your URLconf #}
+            <p><a href="{% url 'ue_app:password_reset' %}" class="text-info">Lost password?</a>
+            </p>
+        </div>
     </div>
 </div>
-    
-
-{% endblock %}
+{% endblock content %}

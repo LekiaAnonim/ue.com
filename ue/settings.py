@@ -99,6 +99,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'ue_app.context_processors.base_data',
             ],
         },
     },
@@ -106,7 +107,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ue.wsgi.application'
 
-
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'prosperlekia@gmail.com'
+EMAIL_HOST_PASSWORD = 'Jesus_is_Lord'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 

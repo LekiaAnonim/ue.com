@@ -46,7 +46,7 @@
                 <div class="date-posted actions share-container">
                     <box-icon class="share-btn" name='share-alt'></box-icon>
                     <div class="social-share-container">
-                        <div class="cancel-share"><box-icon name='x'></box-icon></div>
+                        <div onclick = 'cancelShare()' class="cancel-share"><box-icon name='x'></box-icon></div>
                         {% post_to_facebook "Check out my story!" %}
                         {% post_to_twitter "Check out my story!" '{{video.get_absolute_url}}' "Share on Twitter" %}
                         {% post_to_gplus '{{video.get_absolute_url}}' "Share on Google+!" %}

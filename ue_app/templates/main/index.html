@@ -1,6 +1,6 @@
 {% extends 'main/base.html' %}
 {% load taggit_templatetags2_tags %}
-<div class="content-container">
+<div class="content-container1">
 
     {% block content %}
         <div class="medium-tabs">
@@ -20,41 +20,42 @@
             <div class="popular-medium-container">
                 {% if categories %}
                 {% for category in categories %}
+                
                 <h3>{{category.name}}</h3>
                 {% if videos %}
-                
                 <div class="mediun-container">
                     
                     {% for video in videos %}
                     {% if video.category.name == category.name %}
                     <a href="{{video.get_absolute_url}}">
                         <div class="popular-videos-card-tab-display">
-                        <div class="popular-video-card">
-                            <div class="video-display">
-                                <div class="video-cover">
-                                    <video src="{{video.video_upload.url}}" controls></video>
-                                </div>
-                            </div>
-                            <div class="video-status-views">
-                                <div class="video-title">
-                                    <h5>{{video.title}}</h5>
-                                </div>
-                                <div class="video-name-views">
-                                    <div class="channel-name">
-                                        <img src="{{video.author.profile.photo.url}}" alt="">
-                                        <p>{{video.author.display_name}}</p>
-                                    </div>
-                                    <div class="views">
-                                        <p>{{ video.views }} view{{ video.views|pluralize }}</p>
+                            <div class="popular-video-card">
+                                <div class="video-display">
+                                    <div class="video-cover">
+                                        <video src="{{video.video_upload.url}}" controls></video>
                                     </div>
                                 </div>
-        
+                                <div class="video-status-views">
+                                    <div class="video-title">
+                                        <h5>{{video.title}}</h5>
+                                    </div>
+                                    <div class="video-name-views">
+                                        <div class="channel-name">
+                                            <img src="{{video.author.profile.photo.url}}" alt="">
+                                            <p>{{video.author.display_name}}</p>
+                                        </div>
+                                        <div class="views">
+                                            <p>{{ video.views }} view{{ video.views|pluralize }}</p>
+                                        </div>
+                                    </div>
+            
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    
-                </a>
+                    </a>
                     {% endif %}
+                    {% empty %}
+                    <p></p>
                     {% endfor %}
                 </div>
                 <a href="{% url 'ue_app:category_videos' category.slug %}">
@@ -65,6 +66,8 @@
                     </div>
                 </a>
                 {% endif %}
+                {% empty %}
+                <p></p>
                 {% endfor %}
                 {% else %}
                 <p>No categories available</p>
@@ -108,6 +111,8 @@
                         </div>
                     </a>
                     {% endif %}
+                    {% empty %}
+                    <p></p>
                     {% endfor %}
                 </div>
                 <a href="{% url 'ue_app:category_articles' category.slug %}">
@@ -118,6 +123,8 @@
                     </div>
                 </a>
                 {% endif %}
+                {% empty %}
+                <p></p>
                 {% endfor %}
                 {% else %}
                 <p>No categories available</p>
@@ -164,6 +171,8 @@
                         </div>
                     </a>
                     {% endif %}
+                    {% empty %}
+                    <p></p>
                     {% endfor %}
                 </div>
                 <a href="{% url 'ue_app:category_audios' category.slug %}">
@@ -174,6 +183,8 @@
                     </div>
                 </a>
                 {% endif %}
+                {% empty %}
+                    <p></p>
                 {% endfor %}
                 {% else %}
                 <p>No categories available</p>

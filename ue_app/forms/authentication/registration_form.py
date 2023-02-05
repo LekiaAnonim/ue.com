@@ -1,5 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.models import User
 
 
 class UserRegisterForm(UserCreationForm):
@@ -18,14 +20,18 @@ class UserRegisterForm(UserCreationForm):
     ),
         help_text='Required. Input a valid email address.'
     )
-    password1 = forms.CharField(label="Password", widget=forms.PasswordInput(attrs={
+    password1 = forms.CharField(label="Password",
+    widget=forms.PasswordInput(attrs={
         "name": "password", "class": "input100",
         "placeholder": "Password"
     }
     ),
     )
 
-    password2 = forms.CharField(label="Confirm Password", widget=forms.PasswordInput(attrs={
+    password2 = forms.CharField(label="Confirm Password",
+                                help_text=_(
+                                    "Enter the same password as before, for verification."),
+    widget=forms.PasswordInput(attrs={
         "name": "Confirm Password", "class": "input100",
         "placeholder": "Confirm Password"
     }
