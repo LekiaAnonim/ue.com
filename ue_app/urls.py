@@ -3,7 +3,7 @@ from ue_app.views.main import home_view
 from ue_app.views.main import article_view
 from ue_app.views.main import audio_view
 from ue_app.views.main import category_view
-from ue_app.views.main import video_view
+from ue_app.views.main import video_view, channel_view
 from ue_app.views.authentication import registration_view
 from ue_app.views.authentication import login_view
 from ue_app.views.authentication import password_reset_view
@@ -146,6 +146,12 @@ urlpatterns = [
     ),
 
     # Channel
+    path(
+        route='channel/@<str:username>/<str:slug>',
+        view=channel_view.ChannelDetailView.as_view(),
+        name='channel_detail'
+    ),
+
 
     # Signup and SignIn URL
     path(

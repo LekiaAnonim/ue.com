@@ -88,10 +88,10 @@ class Article(MediumInfo):
         super(Article, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('ue_app:article_detail', kwargs={'username': self.author.display_name.lower(), 'slug': self.slug})
+        return reverse('ue_app:article_detail', kwargs={'username': self.author.profile.user.username.lower(), 'slug': self.slug})
 
     def get_like_url(self):
-        return reverse('ue_app:article_like_toggle', kwargs={'username': self.author.display_name.lower(), 'slug': self.slug})
+        return reverse('ue_app:article_like_toggle', kwargs={'username': self.author.profile.user.username.lower(), 'slug': self.slug})
 
     def get_api_like_url(self):
-        return reverse('ue_app:article_api_like_toggle', kwargs={'username': self.author.display_name.lower(), 'slug': self.slug})
+        return reverse('ue_app:article_api_like_toggle', kwargs={'username': self.author.profile.user.username.lower(), 'slug': self.slug})

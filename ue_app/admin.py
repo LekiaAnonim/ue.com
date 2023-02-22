@@ -10,10 +10,13 @@ from ue_app.models.video_model import Video
 
 @admin.register(Channel)
 class ChannelAdmin(admin.ModelAdmin):
-    fields = ('profile', 'display_name', 'description', 'banner')
-    list_display = ('profile', 'display_name', 'description', 'banner')
-    list_filter = ("profile",)
-    search_fields = ("profile",)
+    fields = ('profile', 'display_name', 'slug',
+              'description', 'banner', 'channel_logo')
+    list_display = ('profile', 'display_name', 'slug',
+                    'description', 'banner', 'channel_logo')
+    list_filter = ("display_name",)
+    search_fields = ("display_name",)
+    prepopulated_fields = {'slug': ('display_name',)}
     empty_value_display = '-None-'
 
 

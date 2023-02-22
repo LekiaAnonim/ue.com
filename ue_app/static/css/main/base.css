@@ -229,7 +229,7 @@ box-icon{
 .channel-name{
     display: flex;
     align-items: center;
-    margin-right: 20px;
+    margin-right: 10px;
 }
 .channel-name p{
     text-overflow: ellipsis;
@@ -255,7 +255,7 @@ box-icon{
 
 /* CATEGORY CSS */
 .category-section{
-    margin-top: 10px;
+    /* margin-top: 10px; */
     padding: 70px 0 0px 0;
     /* border: solid red; */
     display: flex;
@@ -282,7 +282,7 @@ box-icon{
     justify-content: left;
     align-items: center;
     overflow-x: scroll;
-    margin-top: 5px;
+    /* margin-top: 5px; */
     padding: 10px;
     border-radius: 5px;
     box-shadow: inset -3px -3px 7px #ffffffb2,
@@ -304,6 +304,7 @@ box-icon{
 .medium-tabs{
     display: flex;
     justify-content: space-around;
+    margin-top: 20px;
 }
 .medium-tab{
     padding: 8px 12px;
@@ -319,7 +320,6 @@ box-icon{
 }
 
 .cart-section{
-    /* border: red solid; */
     width: 100%;
 }
 
@@ -477,14 +477,14 @@ box-icon{
 }
 .article-attr{
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
     background-color: var(--bg);
     width: 100%;
 }
 .article-attr div{
-    margin: 10px;
+    margin: 5px;
 }
 .article-attr span{
     font-weight: 700;
@@ -826,4 +826,125 @@ input{
 }
 .message-alert p {
     font-weight: 600;
+}
+
+
+/* CHANNEL STYLES */
+.channel-container{
+    width: 100%;
+    padding: 20px;
+}
+.channel-info{
+    width: 100%;
+}
+.channel-banner{
+    width: 100%;
+}
+.channel-banner img{
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.channel-detail{
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.channel-name-photo{
+    display: flex;
+    justify-content: center;
+}
+.channel-name-photo .photo{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--lobg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.channel-name-photo .photo img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+.name-followers{
+    margin-left: 10px;
+}
+.channel-stats{
+    padding: 10px;
+    background-color: var(--gbg);
+}
+.channel-stats-attr{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+.channel-followers{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.channel-followers p{
+    background-color: var(--gbg);
+    border-radius: 10px;
+    padding: 3px 5px;
+}
+
+.follow-channel{
+    padding: 0 30px;
+}
+.follow-channel button{
+    padding: 7px 25px;
+    background-color: #fff;
+    border: none;
+    box-shadow: 2px 5px 7px 2px var(--gbg);
+    border-radius: 12px;
+    transition: all 0.5s;
+    transform: scale(1);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.follow-channel button svg{
+    padding: 0;
+    margin: 0;
+}
+.follow-channel button svg {
+    padding: 0;
+    margin: 0 5px 0 0;
+}
+.follow-channel button:hover{
+    transform: scale(1.1);
+}
+.channel-about{
+    margin-top: 50px;
+}
+.channel-about-head span{
+    color: var(--bg);
+    font-size: 18px;
+}
+.channel-owner p{
+    background-color: var(--gbg);
+    border-radius: 10px;
+    padding: 3px 5px;
+}
+
+.channel-owner{
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.channel-owner img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+.channel-owner-photo-name{
+    display: flex;
+    align-items: center;
+    margin-left: 30px;
 }

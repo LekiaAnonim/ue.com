@@ -3,6 +3,9 @@
 {% load only_hours %}
 {% load social_share %}
 
+{% block category_display %}
+{% endblock %}
+
 {% block content %}
 
 <div class="article-detail-container">
@@ -20,7 +23,7 @@
         <div class="article-attribute-container">
             <div class="article-attr">
                 <div class="channel-name">
-                    <img src="{{audio.author.profile.photo.url}}" alt="">
+                    <a href="{{audio.author.get_absolute_url}}"><img src="{{audio.author.channel_logo.url}}" alt=""><a/>
                     <p>{{audio.author.display_name}}</p>
                 </div>
                 <div class="date-posted views">

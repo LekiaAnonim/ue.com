@@ -1,195 +1,196 @@
 {% extends 'main/base.html' %}
 {% load taggit_templatetags2_tags %}
-<div class="content-container1">
-
-    {% block content %}
-        <div class="medium-tabs">
-            <div class="medium-tab tablinks" onclick="openCity(event, 'video')" id="defaultOpen">
-                <p> Videos</p>
+<div class="content-container">
+    <div class="content-page">
+        {% block content %}
+            <div class="medium-tabs">
+                <div class="medium-tab tablinks" onclick="openCity(event, 'video')" id="defaultOpen">
+                    <p> Videos</p>
+                </div>
+                <div class="medium-tab tablinks" onclick="openCity(event, 'article')">
+                    <p>Articles</p>
+                </div>
+                <div class="medium-tab tablinks" onclick="openCity(event, 'audio')">
+                    <p>Audios</p>
+                </div>
             </div>
-            <div class="medium-tab tablinks" onclick="openCity(event, 'article')">
-                <p>Articles</p>
-            </div>
-            <div class="medium-tab tablinks" onclick="openCity(event, 'audio')">
-                <p>Audios</p>
-            </div>
-        </div>
 
 
-        <div class="cart-section tabcontent" id="video">
-            <div class="popular-medium-container">
-                {% if categories %}
-                {% for category in categories %}
-                
-                <h3>{{category.name}}</h3>
-                {% if videos %}
-                <div class="mediun-container">
+            <div class="cart-section tabcontent" id="video">
+                <div class="popular-medium-container">
+                    {% if categories %}
+                    {% for category in categories %}
                     
-                    {% for video in videos %}
-                    {% if video.category.name == category.name %}
-                    <a href="{{video.get_absolute_url}}">
-                        <div class="popular-videos-card-tab-display">
+                    <h3>{{category.name}}</h3>
+                    {% if videos %}
+                    <div class="mediun-container">
+                        
+                        {% for video in videos %}
+                        {% if video.category.name == category.name %}
+                        <a href="{{video.get_absolute_url}}">
+                            <div class="popular-videos-card-tab-display">
+                                <div class="popular-video-card">
+                                    <div class="video-display">
+                                        <div class="video-cover">
+                                            <video src="{{video.video_upload.url}}" controls></video>
+                                        </div>
+                                    </div>
+                                    <div class="video-status-views">
+                                        <div class="video-title">
+                                            <h5>{{video.title}}</h5>
+                                        </div>
+                                        <div class="video-name-views">
+                                            <div class="channel-name">
+                                                <img src="{{video.author.channel_logo.url}}" alt="">
+                                                <p>{{video.author.display_name}}</p>
+                                            </div>
+                                            <div class="views">
+                                                <p>{{ video.views }} view{{ video.views|pluralize }}</p>
+                                            </div>
+                                        </div>
+                
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        {% endif %}
+                        {% empty %}
+                        <p></p>
+                        {% endfor %}
+                    </div>
+                    <a href="{% url 'ue_app:category_videos' category.slug %}">
+                        <div class="more">
+                            <div></div>
+                            <p>More</p><box-icon class="more-arrow" type='solid' name='right-arrow-alt'></box-icon>
+                            <div></div>
+                        </div>
+                    </a>
+                    {% endif %}
+                    {% empty %}
+                    <p></p>
+                    {% endfor %}
+                    {% else %}
+                    <p>No categories available</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="cart-section tabcontent" id="article">
+                <div class="popular-medium-container">
+                    {% if categories %}
+                    {% for category in categories %}
+                    <h3>{{category.name}}</h3>
+                    {% if articles %}
+                    <div class="mediun-container">
+                        {% for article in articles %}
+                        {% if article.category.name == category.name %}
+                        <a href="{{article.get_absolute_url}}">
+                            <div class="popular-videos-card-tab-display">
                             <div class="popular-video-card">
                                 <div class="video-display">
                                     <div class="video-cover">
-                                        <video src="{{video.video_upload.url}}" controls></video>
+                                        <img src="{{article.feature_image.url}}">
                                     </div>
                                 </div>
                                 <div class="video-status-views">
                                     <div class="video-title">
-                                        <h5>{{video.title}}</h5>
+                                        <h5>{{article.title}}</h5>
                                     </div>
                                     <div class="video-name-views">
                                         <div class="channel-name">
-                                            <img src="{{video.author.profile.photo.url}}" alt="">
-                                            <p>{{video.author.display_name}}</p>
+                                            <img src="{{article.author.channel_logo.url}}" alt="">
+                                            <p>{{article.author.display_name}}</p>
                                         </div>
                                         <div class="views">
-                                            <p>{{ video.views }} view{{ video.views|pluralize }}</p>
+                                            <p>{{ article.views }} view{{ article.views|pluralize }}</p>
                                         </div>
                                     </div>
             
                                 </div>
                             </div>
+                            </div>
+                        </a>
+                        {% endif %}
+                        {% empty %}
+                        <p></p>
+                        {% endfor %}
+                    </div>
+                    <a href="{% url 'ue_app:category_articles' category.slug %}">
+                        <div class="more">
+                            <div></div>
+                            <p>More</p><box-icon class="more-arrow" type='solid' name='right-arrow-alt'></box-icon>
+                            <div></div>
                         </div>
                     </a>
                     {% endif %}
                     {% empty %}
                     <p></p>
                     {% endfor %}
-                </div>
-                <a href="{% url 'ue_app:category_videos' category.slug %}">
-                    <div class="more">
-                        <div></div>
-                        <p>More</p><box-icon class="more-arrow" type='solid' name='right-arrow-alt'></box-icon>
-                        <div></div>
-                    </div>
-                </a>
-                {% endif %}
-                {% empty %}
-                <p></p>
-                {% endfor %}
-                {% else %}
-                <p>No categories available</p>
-                {% endif %}
-            </div>
-        </div>
-        
-        <div class="cart-section tabcontent" id="article">
-            <div class="popular-medium-container">
-                {% if categories %}
-                {% for category in categories %}
-                <h3>{{category.name}}</h3>
-                {% if articles %}
-                <div class="mediun-container">
-                    {% for article in articles %}
-                    {% if article.category.name == category.name %}
-                    <a href="{{article.get_absolute_url}}">
-                        <div class="popular-videos-card-tab-display">
-                        <div class="popular-video-card">
-                            <div class="video-display">
-                                <div class="video-cover">
-                                    <img src="{{article.feature_image.url}}">
-                                </div>
-                            </div>
-                            <div class="video-status-views">
-                                <div class="video-title">
-                                    <h5>{{article.title}}</h5>
-                                </div>
-                                <div class="video-name-views">
-                                    <div class="channel-name">
-                                        <img src="{{article.author.profile.photo.url}}" alt="">
-                                        <p>{{article.author.display_name}}</p>
-                                    </div>
-                                    <div class="views">
-                                        <p>{{ article.views }} view{{ article.views|pluralize }}</p>
-                                    </div>
-                                </div>
-        
-                            </div>
-                        </div>
-                        </div>
-                    </a>
+                    {% else %}
+                    <p>No categories available</p>
                     {% endif %}
-                    {% empty %}
-                    <p></p>
-                    {% endfor %}
                 </div>
-                <a href="{% url 'ue_app:category_articles' category.slug %}">
-                    <div class="more">
-                        <div></div>
-                        <p>More</p><box-icon class="more-arrow" type='solid' name='right-arrow-alt'></box-icon>
-                        <div></div>
-                    </div>
-                </a>
-                {% endif %}
-                {% empty %}
-                <p></p>
-                {% endfor %}
-                {% else %}
-                <p>No categories available</p>
-                {% endif %}
             </div>
-        </div>
-        
-        <div class="cart-section tabcontent" id="audio">
-            <div class="popular-medium-container">
-                {% if categories %}
-                {% for category in categories %}
-                <h3>{{category.name}}</h3>
-                {% if audios %}
-                <div class="mediun-container">
-                    {% for audio in audios %}
-                    {% if audio.category.name == category.name %}
-                    <a href="{{audio.get_absolute_url}}">
-                        <div class="popular-videos-card-tab-display">
-                            <div class="popular-video-card">
-                                <div class="video-display">
-                                    <div class="video-cover">
-                                        <img src="{{audio.feature_image.url}}">
-                                        <div class="audio-cover-1">
-                                            <audio src="{{audio.audio_upload.url}}" controls></audio>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="video-status-views">
-                                    <div class="video-title">
-                                        <h5>{{audio.title}}</h5>
-                                    </div>
-                                    <div class="video-name-views">
-                                        <div class="channel-name">
-                                            <img src="{{audio.author.profile.photo.url}}" alt="">
-                                            <p>{{audio.author.display_name}}</p>
-                                        </div>
-                                        <div class="views">
-                                            <p>{{ audio.views }} view{{ audio.views|pluralize }}</p>
-                                        </div>
-                                    </div>
             
+            <div class="cart-section tabcontent" id="audio">
+                <div class="popular-medium-container">
+                    {% if categories %}
+                    {% for category in categories %}
+                    <h3>{{category.name}}</h3>
+                    {% if audios %}
+                    <div class="mediun-container">
+                        {% for audio in audios %}
+                        {% if audio.category.name == category.name %}
+                        <a href="{{audio.get_absolute_url}}">
+                            <div class="popular-videos-card-tab-display">
+                                <div class="popular-video-card">
+                                    <div class="video-display">
+                                        <div class="video-cover">
+                                            <img src="{{audio.feature_image.url}}">
+                                            <div class="audio-cover-1">
+                                                <audio src="{{audio.audio_upload.url}}" controls></audio>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="video-status-views">
+                                        <div class="video-title">
+                                            <h5>{{audio.title}}</h5>
+                                        </div>
+                                        <div class="video-name-views">
+                                            <div class="channel-name">
+                                                <img src="{{audio.author.channel_logo.url}}" alt="">
+                                                <p>{{audio.author.display_name}}</p>
+                                            </div>
+                                            <div class="views">
+                                                <p>{{ audio.views }} view{{ audio.views|pluralize }}</p>
+                                            </div>
+                                        </div>
+                
+                                    </div>
                                 </div>
                             </div>
+                        </a>
+                        {% endif %}
+                        {% empty %}
+                        <p></p>
+                        {% endfor %}
+                    </div>
+                    <a href="{% url 'ue_app:category_audios' category.slug %}">
+                        <div class="more">
+                            <div></div>
+                            <p>More</p><box-icon class="more-arrow" type='solid' name='right-arrow-alt'></box-icon>
+                            <div></div>
                         </div>
                     </a>
                     {% endif %}
                     {% empty %}
-                    <p></p>
+                        <p></p>
                     {% endfor %}
+                    {% else %}
+                    <p>No categories available</p>
+                    {% endif %}
                 </div>
-                <a href="{% url 'ue_app:category_audios' category.slug %}">
-                    <div class="more">
-                        <div></div>
-                        <p>More</p><box-icon class="more-arrow" type='solid' name='right-arrow-alt'></box-icon>
-                        <div></div>
-                    </div>
-                </a>
-                {% endif %}
-                {% empty %}
-                    <p></p>
-                {% endfor %}
-                {% else %}
-                <p>No categories available</p>
-                {% endif %}
             </div>
-        </div>
-    {% endblock content %}
+        {% endblock content %}
+    </div>
 </div>

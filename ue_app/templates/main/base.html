@@ -116,9 +116,10 @@
                     {% for account in channels %}
                     <div class="recommended-account-card">
                         <div class="photo-name">
+                            <a href="{{account.get_absolute_url}}">
                             <div class="account-image">
-                                <img data-title="Elliot Fu" data-content="Elliot has been a member since July 2012" class="ui avatar image" src="{{account.profile.photo.url}}" alt="">
-                            </div>
+                                <img data-title="Elliot Fu" data-content="Elliot has been a member since July 2012" class="ui avatar image" src="{{account.channel_logo.url}}" alt="">
+                            </div></a>
                             <div class="account-name">
                                 <p>{{account.display_name}}</p>
                             </div>
@@ -162,7 +163,7 @@
                                 </div>
                                 <div class="video-name-views">
                                     <div class="channel-name">
-                                        <img src="{{video.author.profile.photo.url}}" alt="">
+                                        <img src="{{video.author.channel_logo.url}}" alt="">
                                         <p>{{video.author.display_name}}</p>
                                     </div>
                                     <div class="views">
@@ -237,7 +238,7 @@
                             </div>
                             <div class="video-name-views">
                                 <div class="channel-name">
-                                    <img src="{{audio.author.profile.photo.url}}" alt="">
+                                    <img src="{{audio.author.channel_logo.url}}" alt="">
                                     <p>{{audio.author.display_name}}</p>
                                 </div>
                                 <div class="views">
@@ -280,7 +281,7 @@
                                 </div>
                                 <div class="video-name-views">
                                     <div class="channel-name">
-                                        <img src="{{article.author.profile.photo.url}}" alt="">
+                                        <img src="{{article.author.channel_logo.url}}" alt="">
                                         <p>{{article.author.display_name}}</p>
                                     </div>
                                     <div class="views">

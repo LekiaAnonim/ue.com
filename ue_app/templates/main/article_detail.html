@@ -1,6 +1,10 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% load only_hours %}
+
+{% block category_display %}
+{% endblock %}
+
 {% block content %}
 {% load social_share %}
 
@@ -14,7 +18,7 @@
         <div class="article-attribute-container">
             <div class="article-attr">
                 <div class="channel-name">
-                    <img src="{{article.author.profile.photo.url}}" alt="">
+                    <a href="{{article.author.get_absolute_url}}"><img src="{{article.author.channel_logo.url}}" alt=""><a/>
                     <p>{{article.author.display_name}}</p>
                 </div>
                 <div class="date-posted views">
