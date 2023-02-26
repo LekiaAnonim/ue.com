@@ -1,0 +1,69 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block category_display %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="content-container">
+    <div class="content-page">
+        <div class="create-medium-head">
+            <h2>Create new video</h2>
+        </div>
+        <div class="form-container">
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="fieldWrapper">
+                    {{form.title.errors}}
+                    {{form.title.label_tag}}
+                    {{form.title}} <br>
+                    <span>A good title helps your content stands out. A good hack is a title that best describes your content.</span>
+                </div>
+                <div class="fieldWrapper">
+                    {{form.video_upload.errors}}
+                    {{form.video_upload.label_tag}}
+                    {{form.video_upload}}
+                </div>
+                <div class="fieldWrapper">
+                    {{form.tags.errors}}
+                    {{form.tags.label_tag}}
+                    {{form.tags}} <br>
+                    <span>Your tags should be comma-separated. Tags are keywords or phrases that help give more hint on the main points or topics of your content.</span>
+                </div>
+                <div class="fieldWrapper">
+                    {{form.category.errors}}
+                    {{form.category.label_tag}}
+                    {{form.category}} <br>
+                    <span>Choose a category for your content. A category describes the single most relevant aspect of your content.</span>
+                </div>
+                <div class="fieldWrapper">
+                    {{form.author.errors}}
+                    {{form.author.label_tag}}
+                    {{form.author}} <br>
+                    <span>Select the channel you are publishing your content on. If your don't have a channel, kindly create one <a href="{% url 'ue_app:video_create' %}"></a></span>
+                </div>
+                <div class="fieldWrapper">
+                    {{form.status.errors}}
+                    {{form.status.label_tag}}
+                    {{form.status}} <br>
+                    <span>If you are not planning on sending out your content now, select draft, else, choose publish.</span>
+                </div>
+                <div class="fieldWrapper">
+                    {{form.display.errors}}
+                    {{form.display.label_tag}}
+                    {{form.display}} <br>
+                    <span>Private contents will be visible to only your account. To make the world see your content, make it public.</span>
+                </div>
+                <div class="fieldWrapper text">
+                    {{form.video_description.errors}}
+                    {{form.video_description.label_tag}} <br>
+                    {{form.video_description}}
+                </div>
+                <input type="submit" value="Create video">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

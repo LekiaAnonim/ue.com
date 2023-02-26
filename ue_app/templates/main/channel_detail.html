@@ -19,7 +19,7 @@
                         <div class="photo"><img src="{{channel.channel_logo.url}}" alt=""></div>
                         <div class="name-followers">
                             <div class="channel-name"><h3>{{channel.display_name}}</h3></div>
-                            <div class="channel-followers"><p>Followers</p><h6>15k</h6></div>
+                            <div class="channel-followers"><p>Followers</p><h6 class="follows-count">{{channel.follow.count}}</h6></div>
                         </div>
                     </div>
                     <div class="channel-stats">
@@ -35,14 +35,30 @@
                     </div>
                 </div>
             </div>
-            <div class="follow-channel">
-                <button><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                    style="fill: rgba(238, 236, 236, 1);transform: ;msFilter:;">
-                    <path
-                        d="M20.205 4.791a5.938 5.938 0 0 0-4.209-1.754A5.906 5.906 0 0 0 12 4.595a5.904 5.904 0 0 0-3.996-1.558 5.942 5.942 0 0 0-4.213 1.758c-2.353 2.363-2.352 6.059.002 8.412L12 21.414l8.207-8.207c2.354-2.353 2.355-6.049-.002-8.416z">
-                    </path>
-                </svg> Follow</button>
-            </div>
+            
+                <div class="follow-channel">
+                    <a class="following-btn" data-href="{{channel.get_api_follow_url}}" data-follows="{{channel.follow.count}}" href="{{channel.get_follow_url}}">
+                        <button>
+                            {% if channel.already_following %}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                style="fill: rgb(252, 42, 88);transform: ;msFilter:;">
+                                <path
+                                    d="M20.205 4.791a5.938 5.938 0 0 0-4.209-1.754A5.906 5.906 0 0 0 12 4.595a5.904 5.904 0 0 0-3.996-1.558 5.942 5.942 0 0 0-4.213 1.758c-2.353 2.363-2.352 6.059.002 8.412L12 21.414l8.207-8.207c2.354-2.353 2.355-6.049-.002-8.416z">
+                                </path>
+                            </svg>
+                            {% else %}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                style="fill: rgba(238, 236, 236, 1);transform: ;msFilter:;">
+                                <path
+                                    d="M20.205 4.791a5.938 5.938 0 0 0-4.209-1.754A5.906 5.906 0 0 0 12 4.595a5.904 5.904 0 0 0-3.996-1.558 5.942 5.942 0 0 0-4.213 1.758c-2.353 2.363-2.352 6.059.002 8.412L12 21.414l8.207-8.207c2.354-2.353 2.355-6.049-.002-8.416z">
+                                </path>
+                            </svg> 
+                            {% endif %}
+                            Follow
+                        </button>
+                    </a>
+                </div>
+            
             <div class="channel-about">
                 <div class="channel-about-head">
                     <div>

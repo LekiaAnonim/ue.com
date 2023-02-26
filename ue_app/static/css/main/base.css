@@ -104,6 +104,25 @@ box-icon{
     height: 100%;
 }
 
+/* Add new content */
+.add-new-content{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--gbg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.add-new-content svg{
+    fill: rgba(0, 0, 0, 1);
+}
+.add-new-content:hover svg{
+    fill: var(--bg);
+}
+
 /* Left Side Bar */
 .left-sidbar{
     float: left;
@@ -423,7 +442,7 @@ box-icon{
     padding: 50px;
 }
 .content-page{
-    max-width: 800px;
+    max-width: 1200px;
     width: 80%;
     min-width: 300px;
 }
@@ -631,6 +650,9 @@ form{
     width: 100%;
     height: 100%;
 }
+.fieldWrapper a{
+    font-size: 10px;
+}
 input{
     width: 100%;
 }
@@ -721,10 +743,33 @@ input{
     right: 10px;
     background-color: var(--gbg);
 }
+.user-avatar-account-card .user-photo{
+    padding-top: 25px;
+    padding-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.add-new-card{
+    display: none;
+    width: 160px;
+    padding: 10px;
+    border-radius: 10px;
+    height: fit-content;
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    background-color: var(--gbg);
+}
 .sign-auth{
     display: flex;
     justify-content: left;
     align-items: center;
+    margin-bottom: 0px;
+    padding: 5px;
+}
+.sign-auth:hover{
+    background-color: var(--lobg);
 }
 .sign-auth box-icon{
     width: 20px;
@@ -832,7 +877,7 @@ input{
 /* CHANNEL STYLES */
 .channel-container{
     width: 100%;
-    padding: 20px;
+    /* padding: 20px; */
 }
 .channel-info{
     width: 100%;
@@ -947,4 +992,198 @@ input{
     display: flex;
     align-items: center;
     margin-left: 30px;
+}
+
+
+/* Create Video, Article, Audio, and Channel Styles */
+form label{
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.fieldWrapper{
+    margin-bottom: 15px;
+}
+
+input[name="video_upload"]{
+    width: fit-content;
+}
+input[name="audio_upload"]{
+    width: fit-content;
+}
+input[name="feature_image"]{
+    width: fit-content;
+}
+input[name="banner"]{
+    width: fit-content;
+}
+input[name="channel_logo"]{
+    width: fit-content;
+}
+input[type=checkbox]{
+    width: fit-content;
+}
+
+form span{
+    font-size: 11px;
+}
+form select{
+    background-color: #fff;
+    border: thin solid var(--gbg);
+    padding: 3px 10px;
+    border-radius: 8px;
+}
+
+form .text input{
+    width: 100%;
+    height: 40px;
+}
+
+form input[type="submit"]{
+    background-color: var(--lobg);
+    width: fit-content;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.create-profile-link{
+    background-color: var(--lobg);
+    width: fit-content;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.info-text{
+    font-size: 10px;
+    line-height: 1;
+    padding: 0;
+    margin: 0;
+}
+
+
+/* Styling Profile Detail page */
+.profile-page-container{
+    padding: 20px;
+}
+.profile-page-photo{
+    margin: 0 0 50px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.profile-page-photo .user-avatar{
+    width: 100px;
+    height: 100px;
+}
+.profile-page-photo p{
+    margin-top: 5px;
+    font-weight: 700;
+
+}
+.profile-text{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.profile-section{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.profile-channels{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 12px;
+    box-shadow: 3px 5px 2px 1px rgb(206, 205, 205);
+    border: thin solid rgb(207, 206, 206);
+    padding: 8px;
+}
+
+.channel-image-name{
+    display: flex;
+    justify-content: left;
+    min-width: 280px;
+    flex-wrap: wrap;
+    width: fit-content;
+}
+.channel-image{
+    width: 80px;
+    height: 80px;
+}
+hr{
+    border: 0.1px solid rgb(224, 222, 222);
+}
+.channel-image img{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+.profile-channel-heading{
+    margin-left: 5px;
+    margin-top: 3px;
+}
+.delete-edit{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 45px;
+    margin-top: 20px;
+}
+.delete-edit svg{
+    width: 15px;
+    height: 15px;
+    fill: #555555;
+    cursor: pointer;
+}
+.delete-edit svg:hover{
+    fill: var(--bg);
+}
+.alert-info{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.alert-info svg{
+    fill: var(--bg);
+    width: 35px;
+    height: 35px;
+}
+.delete-pop-up{
+    width: 200px;
+    padding: 5px;
+    border-radius: 6px;
+    box-shadow: 3px 3px rgb(207, 206, 206);
+    border: thin solid rgb(207, 206, 206);
+    display: none;
+    height: 0;
+    transition: 0.5s all;
+}
+.displayDeleteCard{
+    display: block;
+    height: fit-content;
+}
+.delete-button{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+.delete-button .cancel-action{
+    border: none;
+    background-color: rgb(255, 0, 55);
+    color: #fff;
+    padding: 3px 5px;
+    border-radius: 6px;
+    font-size: 11px;
+    cursor: pointer;
+}
+.delete-button .delete-action{
+    border: none;
+    background-color: rgb(5, 136, 59);
+    color: #fff;
+    padding: 3px 5px;
+    border-radius: 6px;
+    font-size: 11px;
+    cursor: pointer;
 }

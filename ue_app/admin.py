@@ -11,7 +11,7 @@ from ue_app.models.video_model import Video
 @admin.register(Channel)
 class ChannelAdmin(admin.ModelAdmin):
     fields = ('profile', 'display_name', 'slug',
-              'description', 'banner', 'channel_logo')
+              'description', 'banner', 'channel_logo','follow')
     list_display = ('profile', 'display_name', 'slug',
                     'description', 'banner', 'channel_logo')
     list_filter = ("display_name",)
@@ -22,9 +22,9 @@ class ChannelAdmin(admin.ModelAdmin):
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    fields = ('user', 'middle_name', 'phone_number', 'date_of_birth', 'photo', 'bio',
+    fields = ('user', 'first_name', 'last_name', 'phone_number', 'date_of_birth', 'photo', 'bio',
               'address', 'city', 'region', 'country', 'email_confirmed')
-    list_display = ('user', 'middle_name', 'phone_number',
+    list_display = ('user', 'first_name', 'last_name', 'phone_number',
                     'address', 'city', 'region', 'country', 'date_of_birth', 'photo', 'bio', 'email_confirmed')
     list_filter = ("user",)
     search_fields = ("user",)

@@ -11,6 +11,7 @@ from ue_app.models.video_model import Video
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth import authenticate, login
 
 class HomeView(TemplateView):
 

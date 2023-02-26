@@ -3,7 +3,7 @@ from ue_app.views.main import home_view
 from ue_app.views.main import article_view
 from ue_app.views.main import audio_view
 from ue_app.views.main import category_view
-from ue_app.views.main import video_view, channel_view
+from ue_app.views.main import video_view, channel_view, profile_view
 from ue_app.views.authentication import registration_view
 from ue_app.views.authentication import login_view
 from ue_app.views.authentication import password_reset_view
@@ -151,7 +151,51 @@ urlpatterns = [
         view=channel_view.ChannelDetailView.as_view(),
         name='channel_detail'
     ),
+    path(
+        route='channel/<str:username>/<str:slug>/follow',
+        view=channel_view.ChannelFollowToggleView.as_view(),
+        name='channel_follow_toggle'
+    ),
+    path(
+        route='api/channel/<str:username>/<str:slug>/follow',
+        view=channel_view.ChannelFollowAPIToggleView.as_view(),
+        name='channel_api_follow_toggle'
+    ),
+    path(
+        route='channel/create',
+        view=channel_view.ChannelCreateView.as_view(),
+        name='channel_create'
+    ),
+    path(
+        route='channel/@<str:username>/<str:slug>/update',
+        view=channel_view.ChannelUpdateView.as_view(),
+        name='channel_update'
+    ),
+    path(
+        route='channel/@<str:username>/<str:slug>/delete',
+        view=channel_view.ChannelDeleteView.as_view(),
+        name='channel_delete'
+    ),
 
+
+     # Profile
+    path(
+        route='profile/@<str:username>/<int:pk>',
+        view=profile_view.ProfileDetailView.as_view(),
+        name='profile_detail'
+    ),
+    path(
+        route='profile/create',
+        view=profile_view.ProfileCreateView.as_view(),
+        name='profile_create'
+    ),
+    path(
+        route='profile/@<str:username>/update',
+        view=profile_view.ProfileUpdateView.as_view(),
+        name='profile_update'
+    ),
+    
+    
 
     # Signup and SignIn URL
     path(

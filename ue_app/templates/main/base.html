@@ -43,7 +43,43 @@
                             <input type="search" name="search" id="search" placeholder="Search Miroor" style="background: url('{% static 'images/icons/search-regular-24.png' %}') no-repeat right;">
                         </div>
                     </div>
+                    
                     <div class="search-sign-in nav-menu">
+                        <div class="add-new-content-container">
+                            {% if request.user.is_authenticated %}
+                            <div class="add-new-content" onclick="displayAddNewCard()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="transform: ;msFilter:;"><path d="M19 11h-6V5h-2v6H5v2h6v6h2v-6h6z"></path></svg>
+                            </div>
+                            {% else %}
+                            <div style="display: none;"></div>
+                            {% endif %}
+
+                            <div class="add-new-card">
+                                <div class="cancel-sign" onclick="canceladdNew()">
+                                    <box-icon name='x'></box-icon>
+                                </div>
+                                <div class="login sign-auth" style="margin-top: 15px;">
+                                    <a href="{% url 'ue_app:login' %}">New Cateory</a>
+                                </div>
+                                <div class="login sign-auth">
+                                    <a href="{% url 'ue_app:channel_create' %}">New Channel</a>
+                                </div>
+                                <div class="logout sign-auth">
+                                    <a href="{% url 'ue_app:article_create' %}">New Article</a>
+                                </div>
+                                <div class="sign-auth">
+                                    <a href="{% url 'ue_app:audio_create' %}"> New Audio</a>
+                                </div>
+                                <div class="sign-auth">
+                                    <a href="{% url 'ue_app:video_create' %}"> New Video</a>
+                                </div>
+                                <hr>
+                                <p class="info-text">To create a channel, create a profile if you did not do that while signing up.</p>
+                                <div class="sign-auth">
+                                    <a href="{% url 'ue_app:profile_create' %}"> New Profile</a>
+                                </div>
+                            </div>
+                        </div>
                         
                         <div class="sign-up icon-div">
                             {% if request.user.is_authenticated %}
@@ -71,7 +107,28 @@
                                 <div class="cancel-sign" onclick="cancelsignMenu()">
                                     <box-icon name='x'></box-icon>
                                 </div>
-                                <div class="login sign-auth">
+                                {% if user.account.photo.url %}
+                                <a href="{% url 'ue_app:profile_detail' user.username user.id %}">
+                                    <div class="user-photo">
+                                        <div class="user-avatar">
+                                            <img src="{{user.account.photo.url}}" alt="">
+                                        </div>
+                                        <p>{{user.username}}</p>
+                                    </div>
+                                </a>
+                                
+                                {% else %}
+                                <a href="{% url 'ue_app:profile_detail' user.username user.id %}">
+                                    <div class="user-photo">
+                                        <div class="user-avatar user-avatar-letter">
+                                            <p>{{user.username|make_list|first|upper}}</p>
+                                        </div>
+                                        <p>{{user.username}}</p>
+                                    </div>
+                                </a>
+                                {% endif %}
+                                <hr>
+                                <div class="login sign-auth" style="margin-top: 15px;">
                                     <box-icon name='log-in-circle'></box-icon> <a href="{% url 'ue_app:login' %}">Log In</a>
                                 </div>
                                 <div class="logout sign-auth">
@@ -432,6 +489,52 @@
                             // newLikes = likeCount - 1;
                             updateText(likeTextCount, removeLike);
                             $(".like-btn").html("<box-icon name='like'></box-icon>");
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                })
+            })
+            
+        })
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            function updateText(textCount, newCount){
+                textCount.text(newCount);
+                
+            }
+            let followTextCount = $(".follows-count");
+            $(".following-btn").click(function(e){
+                e.preventDefault()
+                let this_ = $(this);
+                let followUrl = this_.attr("data-href");
+                let followCount = parseInt(this_.attr("data-follows")) || 0;
+                let addFollow = followCount + 1;
+                let removeFollow;
+                if(followCount<=0){
+                    removeFollow = 0;
+                }else {removeFollow = followCount - 1;}
+                
+                $.ajax({
+                    url: followUrl,
+                    method: "GET",
+                    data: {},
+                    success: function (data) {
+                        // let newLikes;
+                        if (data.following) {
+                            // newLikes = likeCount + 1;
+                            updateText(followTextCount, addFollow);
+                            $(".follow-btn svg").style.fill = "rgb(252, 42, 88)";
+                            // console.log(addFollow);
+                        }
+                        else {
+                            // newLikes = likeCount - 1;
+                            updateText(followTextCount, removeFollow);
+                            $(".follow-btn svg").style.fill = "rgba(238, 236, 236, 1)";
+                            // console.log(removeFollow);
                         }
                     },
                     error: function (error) {

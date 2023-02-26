@@ -10,6 +10,7 @@ from rest_framework import authentication, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.shortcuts import render, get_object_or_404, redirect
+from django.utils.text import slugify
 
 
 class VideoListView(ListView):
@@ -116,7 +117,16 @@ class VideoLikeAPIToggleView(APIView):
 
 class VideoCreateView(CreateView):
     model = Video
+    fields = ['title', 'video_upload', 'category', 'author', 'tags',
+              'status', 'display', 'video_description']
+    template_name = 'main/video_form.html'
 
+    def form_valid(self, form):
+        form.instance.slug = slugify(form.instance.title)
+        form.save()
+        return super().form_valid(form)
 
 class VideoUpdateView(UpdateView):
     model = Video
+    fields = ['title', 'video_upload', 'category', 'author', 'tags',
+              'status', 'display', 'video_description']

@@ -23,11 +23,20 @@ function cancelShare() {
 
 let userAvatar = document.querySelector('.user-avatar');
 let signMenu = document.querySelector('.user-avatar-account-card');
+let addNewContent = document.querySelector('.add-new-card');
 function displayCard() {
     signMenu.style.display = 'block';
 }
+
+function displayAddNewCard() {
+    addNewContent.style.display = 'block';
+}
+
 function cancelsignMenu() {
     signMenu.style.display = 'none';
+}
+function canceladdNew() {
+    addNewContent.style.display = 'none';
 }
 let banner  = document.querySelector('.banner')
 function cancelBanner() {
@@ -53,13 +62,24 @@ function showPassword(checkbox) {
   
 }
 
-let password1Input = document.querySelector("input[name='password1']");
-let password2Input = document.querySelector("input[name='password2']");
+let deleteBtn = document.querySelectorAll(".delete-content svg");
+let deleteCard = document.querySelectorAll(".delete-pop-up");
+deleteBtn.forEach((dBtn)=>{
+    dBtn.addEventListener('click',()=>{
+        deleteCard.forEach((dCard)=>{
+            if (dBtn.classList[0] == dCard.id) {
+                dCard.classList.add('displayDeleteCard');
+            };
+        })
+    })
+})
 
-setInterval(() => {
-    if (password2Input.value == password1Input.value) {
-        password2Input.style.color = 'green';
-    } else {
-        password2Input.style.color = 'red';
+let deletePromptCard = document.querySelector(".delete-pop-up");
+function cancelDeletePromptCard(btn) {
+    if (btn.parentElement.parentElement.style.display != 'none') {
+        btn.parentElement.parentElement.classList.remove('displayDeleteCard');
+    }else{
+        btn.parentElement.parentElement.classList.add('displayDeleteCard');
     }
-}, 500);
+    
+}

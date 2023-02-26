@@ -1,0 +1,82 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block category_display %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="content-container">
+    <div class="content-page">
+        <div class="create-medium-head">
+            <h2>Create new profile</h2>
+        </div>
+        <div class="form-container">
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="fieldWrapper">
+                    {{form.first_name.errors}}
+                    {{form.first_name.label_tag}}
+                    {{form.first_name}}
+                    <span>Enter your first name.</span>
+                </div>
+                <div class="fieldWrapper">
+                    {{form.last_name.errors}}
+                    {{form.last_name.label_tag}} <br>
+                    {{form.last_name}}
+                </div>
+                <div class="fieldWrapper">
+                    {{form.phone_number.errors}}
+                    {{form.phone_number.label_tag}}
+                    {{form.phone_number}} <br>
+                    <span>Enter your phone number with your country code extension.</span>
+                </div>
+                <div class="fieldWrapper">
+                    {{form.date_of_birth.errors}}
+                    {{form.date_of_birth.label_tag}}
+                    {{form.date_of_birth}}
+                    <span></span>
+                </div>
+                <div class="fieldWrapper">
+                    {{form.photo.errors}}
+                    {{form.photo.label_tag}}
+                    {{form.photo}}
+                    <span></span>
+                </div>
+                <div class="fieldWrapper">
+                    {{form.bio.errors}}
+                    {{form.bio.label_tag}} <br>
+                    {{form.bio}}
+                    <span></span>
+                </div>
+                <div class="fieldWrapper">
+                    {{form.address.errors}}
+                    {{form.address.label_tag}}
+                    {{form.address}}
+                    <span></span>
+                </div>
+                <div class="fieldWrapper">
+                    {{form.city.errors}}
+                    {{form.city.label_tag}}
+                    {{form.city}}
+                    <span></span>
+                </div>
+                <div class="fieldWrapper">
+                    {{form.region.errors}}
+                    {{form.region.label_tag}}
+                    {{form.region}}
+                    <span></span>
+                </div>
+                <div class="fieldWrapper">
+                    {{form.country.errors}}
+                    {{form.country.label_tag}}
+                    {{form.country}}
+                    <span></span>
+                </div>
+                <input type="submit" value="Create profile">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

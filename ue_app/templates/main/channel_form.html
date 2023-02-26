@@ -1,0 +1,46 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block category_display %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="content-container">
+    <div class="content-page">
+        <div class="create-medium-head">
+            <h2>Create new channel</h2>
+        </div>
+        <div class="form-container">
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="fieldWrapper">
+                    {{form.display_name.errors}}
+                    {{form.display_name.label_tag}}
+                    {{form.display_name}}
+                    <span>Great repository names are short and memorable.</span>
+                </div>
+                <div class="fieldWrapper">
+                    {{form.description.errors}}
+                    {{form.description.label_tag}} <br>
+                    {{form.description}}
+                </div>
+                <div class="fieldWrapper">
+                    {{form.banner.errors}}
+                    {{form.banner.label_tag}} <br>
+                    {{form.banner}} <br>
+                    <span>A banner is a cover image for your channel. We recommend using an image with higher width to height ratio.</span>
+                </div>
+                <div class="fieldWrapper">
+                    {{form.channel_logo.errors}}
+                    {{form.channel_logo.label_tag}} <br>
+                    {{form.channel_logo}}
+                    <span></span>
+                </div>
+                <input type="submit" value="Create channel">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

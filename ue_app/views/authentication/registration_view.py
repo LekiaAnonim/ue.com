@@ -12,6 +12,7 @@ from ue_app.models.video_model import Video
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from django.http.response import HttpResponseRedirect, HttpResponse
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
@@ -23,7 +24,7 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView
 from django.conf import settings
 UserModel = get_user_model()
@@ -66,26 +67,35 @@ class UserRegisterView(View):
             user.save()
             current_site = get_current_site(request)
             mail_subject = 'Activate your account.'
-            message = render_to_string('registration/activate_email.html', {
+            message = render_to_string('registration/activate_email.html'
+                                       , {
                 'user': user,
                 'domain': current_site.domain,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': default_token_generator.make_token(user),
                 'protocol': 'http',
-            })
-            from_email = settings.EMAIL_HOST_USER
+            }
+            )
+            from_email = 'prosperlekia@gmail.com'
             to_email = register_form.cleaned_data.get('email')
+            print(to_email)
+            print(message)
             email = EmailMessage(
                 mail_subject, message, from_email, to=[to_email]
             )
             email.send()
 
-            return reverse_lazy('ue_app:email_verification_confirm')
+            return HttpResponseRedirect(reverse_lazy('ue_app:email_verification_confirm'))
 
         else:
             messages.error(request, "Please provide valid information.")
             # Redirect user to register page
             return render(request, self.template_name, self.context)
+        
+    # def form_valid(self, form):
+    #     self.object = form.save(commit = False)
+    #     form.save()
+    #     return super(UserRegisterView, self).form_valid(form)
 
     def get_success_url(self):
         return reverse('ue_app:home')

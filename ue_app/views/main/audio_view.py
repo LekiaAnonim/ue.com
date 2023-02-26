@@ -10,6 +10,7 @@ from rest_framework import authentication, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.shortcuts import render, get_object_or_404, redirect
+from django.utils.text import slugify
 
 
 class AudioListView(ListView):
@@ -117,6 +118,14 @@ class AudioLikeAPIToggleView(APIView):
 
 class AudioCreateView(CreateView):
     model = Audio
+    fields = ['title', 'feature_image', 'audio_upload', 'category', 'author', 'tags',
+              'status', 'display', 'audio_description']
+    template_name = 'main/audio_form.html'
+
+    def form_valid(self, form):
+        form.instance.slug = slugify(form.instance.title)
+        form.save()
+        return super().form_valid(form)
 
 
 class AudioUpdateView(UpdateView):

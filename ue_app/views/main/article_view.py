@@ -11,6 +11,7 @@ from ue_app.models.comment_model import Comment, ArticleComment, AudioComment, V
 from ue_app.models.video_model import Video
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.shortcuts import render, get_object_or_404, redirect
+from django.utils.text import slugify
 
 
 class ArticleListView(ListView):
@@ -117,6 +118,15 @@ class ArticleLikeAPIToggleView(APIView):
 
 class ArticleCreateView(CreateView):
     model = Article
+
+    fields = ['title', 'feature_image', 'body', 'category', 'author', 'tags',
+              'status', 'display']
+    template_name = 'main/article_form.html'
+
+    def form_valid(self, form):
+        form.instance.slug = slugify(form.instance.title)
+        form.save()
+        return super().form_valid(form)
 
 
 class ArticleUpdateView(UpdateView):
