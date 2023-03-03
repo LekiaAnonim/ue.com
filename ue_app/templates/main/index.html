@@ -25,7 +25,7 @@
                     {% if videos %}
                     <div class="mediun-container">
                         
-                        {% for video in videos %}
+                        {% for video in videos|slice:":12" %}
                         {% if video.category.name == category.name %}
                         <a href="{{video.get_absolute_url}}">
                             <div class="popular-videos-card-tab-display">
@@ -37,7 +37,7 @@
                                     </div>
                                     <div class="video-status-views">
                                         <div class="video-title">
-                                            <h5>{{video.title}}</h5>
+                                            <h5>{{video.title|title}}</h5>
                                         </div>
                                         <div class="video-name-views">
                                             <div class="channel-name">
@@ -82,7 +82,7 @@
                     <h3>{{category.name}}</h3>
                     {% if articles %}
                     <div class="mediun-container">
-                        {% for article in articles %}
+                        {% for article in articles|slice:":12" %}
                         {% if article.category.name == category.name %}
                         <a href="{{article.get_absolute_url}}">
                             <div class="popular-videos-card-tab-display">
@@ -94,7 +94,7 @@
                                 </div>
                                 <div class="video-status-views">
                                     <div class="video-title">
-                                        <h5>{{article.title}}</h5>
+                                        <h5>{{article.title|title}}</h5>
                                     </div>
                                     <div class="video-name-views">
                                         <div class="channel-name">
@@ -139,7 +139,7 @@
                     <h3>{{category.name}}</h3>
                     {% if audios %}
                     <div class="mediun-container">
-                        {% for audio in audios %}
+                        {% for audio in audios|slice:":12" %}
                         {% if audio.category.name == category.name %}
                         <a href="{{audio.get_absolute_url}}">
                             <div class="popular-videos-card-tab-display">
@@ -154,7 +154,7 @@
                                     </div>
                                     <div class="video-status-views">
                                         <div class="video-title">
-                                            <h5>{{audio.title}}</h5>
+                                            <h5>{{audio.title|title}}</h5>
                                         </div>
                                         <div class="video-name-views">
                                             <div class="channel-name">

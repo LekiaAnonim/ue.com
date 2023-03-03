@@ -1,68 +1,60 @@
 {% extends 'main/base.html' %}
 
+
 <div class="content-container">
-{% block content %}
+    <div class="content-page">
+        {% block content %}
 
-{% if categories %}
-{% for category in categories %}
-{% if category_video %}
-{% for video in category_video %}
+        {% if categories %}
+        {% for category in categories %}
+        {% if category_video %}
+        {% for video in category_video %}
 
-{% if video.category.name == category.name %}
+        {% if video.category.name == category.name %}
 
-    <div class="content-title">
-        <h1>{{category.name}}</h1>
-    </div>
-        <!-- <div class="category-container-stats">
-            <div class="category-image-container">
-                <img src="{{category.image.url}}" alt="">
+            <div class="content-title">
+                <h1>{{category.name|title}}</h1>
             </div>
-            <div class="category-stats">
-                {% comment %} Total Articles: <span>480</span>
-                Total Audios: <span>480</span> {% endcomment %}
-                <p>Total Videos: <span>480</span></p>
-                <p>Total Views: <span>490.6K</span></p>
-            </div>
-        </div> -->
 
-    <div class="popular-videos-card-tab-display">
-        <div class="popular-video-card">
-            <div class="video-display">
-                <div class="video-cover">
-                    <video src="{{video.video_upload.url}}" controls></video>
-                </div>
-            </div>
-            <div class="video-status-views">
-                <div class="video-title">
-                    <h5>{{video.title}}</h5>
-                </div>
-                <div class="video-name-views">
-                    <div class="channel-name">
-                        <img src="{{video.author.photo.url}}" alt="">
-                        <p>{{video.author.display_name}}</p>
+            <div class="popular-videos-card-tab-display">
+                <div class="popular-video-card">
+                    <div class="video-display">
+                        <div class="video-cover">
+                            <video src="{{video.video_upload.url}}" controls></video>
+                        </div>
                     </div>
-                    <div class="views">
-                        <p>12.6K</p>
+                    <div class="video-status-views">
+                        <div class="video-title">
+                            <h5>{{video.title|title}}</h5>
+                        </div>
+                        <div class="video-name-views">
+                            <div class="channel-name">
+                                <img src="{{video.author.photo.url}}" alt="">
+                                <p>{{video.author.display_name}}</p>
+                            </div>
+                            <div class="views">
+                                <p>12.6K</p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-
             </div>
-        </div>
+
+        {% else %}
+        <p></p>
+        {% endif %}
+
+        {% endfor %}
+        {% else %}
+        <p></p>
+        {% endif %}
+
+        {% endfor %}
+        {% else %}
+        <p>No category available</p>
+        {% endif %}
+
+        {% endblock content %}
     </div>
-
-{% else %}
-<p></p>
-{% endif %}
-
-{% endfor %}
-{% else %}
-<p></p>
-{% endif %}
-
-{% endfor %}
-{% else %}
-<p>No category available</p>
-{% endif %}
-
-{% endblock content %}
 </div>

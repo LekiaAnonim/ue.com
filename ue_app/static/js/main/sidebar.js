@@ -5,16 +5,20 @@ let expandIcon = document.querySelector('.expand');
 let cancelSideBarBtn = document.querySelector('.place-horizontal');
 let sidebarTag = document.querySelector('.collapse-title-popup-tag');
 let sideBarTitle = document.querySelector('.title h3');
-let displayName = document.querySelector('.account-name');
-let onlineStatusViews = document.querySelector('.online-status-views');
+let displayName = document.querySelectorAll('.account-name');
+let onlineStatusViews = document.querySelectorAll('.online-status-views');
 let popularVideos = document.querySelectorAll('.recommended-videos')
 
 function collapse() {
     sideBar.style.width = '50px';
     sideBar.style.height = '100%';
     sideBarTitle.classList.add('remove-element');
-    displayName.classList.add('remove-element');
-    onlineStatusViews.classList.add('remove-element');
+    displayName.forEach((dName)=>{
+        dName.classList.add('remove-element');
+    })
+    onlineStatusViews.forEach((onlineSV)=>{
+        onlineSV.classList.add('remove-element');
+    })
     expandIcon.classList.remove('remove-element');
     cancelSideBarBtn.classList.remove('remove-element');
     sidebarTag.classList.remove('remove-element');
@@ -34,8 +38,12 @@ function expand(e) {
     e.preventDefault();
     sideBar.style.width = '235px';
     sideBarTitle.classList.remove('remove-element');
-    displayName.classList.remove('remove-element');
-    onlineStatusViews.classList.remove('remove-element');
+    displayName.forEach((dName)=>{
+        dName.classList.add('remove-element');
+    })
+    onlineStatusViews.forEach((onlineSV)=>{
+        onlineSV.classList.add('remove-element');
+    })
     collapseIcon.classList.remove('remove-element');
     expandIcon.classList.add('remove-element');
     cancelSideBarBtn.classList.add('remove-element');
@@ -60,8 +68,12 @@ function makeHorizontal() {
     sideBar.style.width = '100%';
     sideBar.style.height = '50px';
     sideBarTitle.classList.add('remove-element');
-    displayName.classList.add('remove-element');
-    onlineStatusViews.classList.add('remove-element');
+    displayName.forEach((dName)=>{
+        dName.classList.add('remove-element');
+    })
+    onlineStatusViews.forEach((onlineSV)=>{
+        onlineSV.classList.add('remove-element');
+    })
     expandIcon.classList.add('remove-element');
     cancelSideBarBtn.classList.add('remove-element');
     sidebarTag.classList.add('remove-element');
@@ -76,7 +88,7 @@ function makeHorizontal() {
     console.log(expandCollapse);
     reccAccts.forEach(element => {
         element.classList.add('flex-center');
-        element.style.marginTop = '0px';
+        element.style.marginTop = '5px';
         element.style.paddingTop = '5px';
     });
     

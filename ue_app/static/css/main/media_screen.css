@@ -1,0 +1,14 @@
+@media (max-width: 400px) {
+    .recommender-channels{
+        display: none;
+    }
+    .content-container{
+        padding: 50px 0 0 0;
+    }
+    .content-page{
+        width: 100%;
+        /* min-width: 300px; */
+    }
+    
+}
+

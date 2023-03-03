@@ -14,34 +14,39 @@ app_name = "ue_app"
 urlpatterns = [
     path('', home_view.HomeView.as_view(), name='home'),
     path(
-        route='writen-stories/',
+        route='written-stories/',
         view=article_view.ArticleListView.as_view(),
         name='articles'
     ),
     path(
-        route='writen-stories/<str:username>/<str:slug>',
+        route='written-stories/<str:username>/<str:slug>',
         view=article_view.ArticleDetailView.as_view(),
         name='article_detail'
     ),
     path(
-        route='writen-stories/<str:username>/<str:slug>/like',
+        route='written-stories/<str:username>/<str:slug>/like',
         view=article_view.ArticleLikeToggleView.as_view(),
         name='article_like_toggle'
     ),
     path(
-        route='api/writen-stories/<str:username>/<str:slug>/like',
+        route='api/written-stories/<str:username>/<str:slug>/like',
         view=article_view.ArticleLikeAPIToggleView.as_view(),
         name='article_api_like_toggle'
     ),
     path(
-        route='writen-stories/create',
+        route='written-stories/create',
         view=article_view.ArticleCreateView.as_view(),
         name='article_create'
     ),
     path(
-        route='writen-stories/@<str:username>/<str:slug>/update',
+        route='written-stories/@<str:username>/<str:slug>/update',
         view=article_view.ArticleUpdateView.as_view(),
         name='article_update'
+    ),
+    path(
+        route='written-stories/@<str:username>/<str:slug>/delete',
+        view=article_view.ArticleDeleteView.as_view(),
+        name='article_delete'
     ),
 
     # Audio URL
@@ -64,6 +69,11 @@ urlpatterns = [
         route='audio-stories/@<str:username>/<str:slug>/update',
         view=audio_view.AudioUpdateView.as_view(),
         name='audio_update'
+    ),
+    path(
+        route='audio-stories/@<str:username>/<str:slug>/delete',
+        view=audio_view.AudioDeleteView.as_view(),
+        name='audio_delete'
     ),
     path(
         route='audio-stories/<str:username>/<str:slug>/like',
@@ -107,6 +117,11 @@ urlpatterns = [
         view=video_view.VideoUpdateView.as_view(),
         name='video_update'
     ),
+    path(
+        route='video-stories/@<str:username>/<str:slug>/delete',
+        view=video_view.VideoDeleteView.as_view(),
+        name='video_delete'
+    ),
 
     # Category URl
     path(
@@ -143,6 +158,11 @@ urlpatterns = [
         route='writen-stories/@<str:username>/<str:slug>/update',
         view=article_view.ArticleUpdateView.as_view(),
         name='article_update'
+    ),
+    path(
+        route='written-stories/@<str:username>/<str:slug>/delete',
+        view=article_view.ArticleDeleteView.as_view(),
+        name='article_delete'
     ),
 
     # Channel

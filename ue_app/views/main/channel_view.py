@@ -21,17 +21,17 @@ class ChannelDetailView(DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        articles = Article.objects.all()
-        audios = Audio.objects.all()
-        videos = Video.objects.all()
+        # articles = Article.objects.all()
+        # audios = Audio.objects.all()
+        # videos = Video.objects.all()
         categories = Category.objects.all()
         channels = Channel.objects.all()
 
         context['article'] = self.object
 
-        context['articles'] = articles
-        context['audios'] = audios
-        context['videos'] = videos
+        # context['articles'] = articles
+        # context['audios'] = audios
+        # context['videos'] = videos
         context['categories'] = categories
         context['channels'] = channels
 

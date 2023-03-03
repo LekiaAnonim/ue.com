@@ -12,6 +12,7 @@ from ue_app.models.video_model import Video
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.text import slugify
+from django.urls import reverse_lazy
 
 
 class ArticleListView(ListView):
@@ -131,3 +132,10 @@ class ArticleCreateView(CreateView):
 
 class ArticleUpdateView(UpdateView):
     model = Article
+    fields = ['title', 'feature_image', 'body', 'category', 'author', 'tags',
+              'status', 'display']
+    template_name = 'main/article_form.html'
+
+class ArticleDeleteView(DeleteView):
+    model = Article
+    success_url = reverse_lazy('ue_app:channel_detail')

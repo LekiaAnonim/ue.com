@@ -11,6 +11,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.text import slugify
+from django.urls import reverse_lazy
 
 
 class VideoListView(ListView):
@@ -130,3 +131,9 @@ class VideoUpdateView(UpdateView):
     model = Video
     fields = ['title', 'video_upload', 'category', 'author', 'tags',
               'status', 'display', 'video_description']
+
+    template_name = 'main/video_form.html'
+
+class VideoDeleteView(DeleteView):
+    model = Video
+    success_url = reverse_lazy('ue_app:channel_detail')

@@ -11,6 +11,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.text import slugify
+from django.urls import reverse_lazy
 
 
 class AudioListView(ListView):
@@ -130,3 +131,10 @@ class AudioCreateView(CreateView):
 
 class AudioUpdateView(UpdateView):
     model = Audio
+    fields = ['title', 'feature_image', 'audio_upload', 'category', 'author', 'tags',
+              'status', 'display', 'audio_description']
+    template_name = 'main/audio_form.html'
+
+class AudioDeleteView(DeleteView):
+    model = Audio
+    success_url = reverse_lazy('ue_app:channel_detail')

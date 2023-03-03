@@ -6,7 +6,7 @@
 
     {% block category_display %}
         <div class="content-title">
-            <h1>{{category.name}}</h1>
+            <h1>{{category.name|title}}</h1>
         </div>
         
         <div class="category-container-stats">
@@ -53,7 +53,7 @@
                         </div>
                         <div class="video-status-views">
                             <div class="video-title">
-                                <h5>{{video.title}}</h5>
+                                <h5>{{video.title|title}}</h5>
                             </div>
                             <div class="video-name-views">
                                 <div class="channel-name">
@@ -95,7 +95,7 @@
                             </div>
                             <div class="video-status-views">
                                 <div class="video-title">
-                                    <h5>{{article.title}}</h5>
+                                    <h5>{{article.title|title}}</h5>
                                 </div>
                                 <div class="video-name-views">
                                     <div class="channel-name">
@@ -141,7 +141,7 @@
                         </div>
                         <div class="video-status-views">
                             <div class="video-title">
-                                <h5>{{audio.title}}</h5>
+                                <h5>{{audio.title|title}}</h5>
                             </div>
                             <div class="video-name-views">
                                 <div class="channel-name">

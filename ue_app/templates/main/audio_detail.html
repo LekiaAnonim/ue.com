@@ -7,76 +7,79 @@
 {% endblock %}
 
 {% block content %}
-
-<div class="article-detail-container">
-    
-    
-    <div class="article-image">
-        <img src="{{audio.feature_image.url}}" alt="">
-        <audio src="{{audio.audio_upload.url}}" controls>
-    </div>
-    <div class="properties-articles">
-        <div class="article-title">
-            <h1>{{audio.title}}</h1>
-        </div>
-        <hr>
-        <div class="article-attribute-container">
-            <div class="article-attr">
-                <div class="channel-name">
-                    <a href="{{audio.author.get_absolute_url}}"><img src="{{audio.author.channel_logo.url}}" alt=""><a/>
-                    <p>{{audio.author.display_name}}</p>
-                </div>
-                <div class="date-posted views">
-                    <box-icon class="attr" name='calendar'></box-icon>
-                    <p><span>{{ audio.date_uploaded|timesince|upto:',' }} ago</span></p>
-                </div>
-                <div class="views">
-                    <img src="{% static 'images/icons/eye_60px.png' %}" alt="">
-                    <p> <span>{{ audio.views }} view{{ audio.views|pluralize }}</span></p>
-                </div>
+<div class="content-container">
+    <div class="content-page">
+        <div class="article-detail-container">
+            <div class="article-image">
+                <img src="{{audio.feature_image.url}}" alt="">
+                <audio src="{{audio.audio_upload.url}}" controls></audio>
             </div>
-            <div class="article-attr">
-                <div class="channel-name actions">
-                    <a class="like-btn" data-href="{{audio.get_api_like_url}}" data-likes="{{audio.likes.count}}"
-                        href="{{audio.get_like_url}}">
-                        {% if audio.already_liked %}
-                        <box-icon name='like' type="solid" animation='tada-hover'></box-icon>
-                        {% else %}
-                        <box-icon name='like' animation='tada-hover'></box-icon>
-                        {% endif %}
-                    </a>
-                    <p class="likes-count">{{audio.likes.count}}</p>
+            <div class="properties-articles">
+                <div class="article-title">
+                    <h1>{{audio.title|title}}</h1>
                 </div>
-                <div class="date-posted actions share-container">
-                    <box-icon class="share-btn" name='share-alt'></box-icon>
-                    <div class="social-share-container">
-                        <div onclick = 'cancelShare()' class="cancel-share"><box-icon name='x'></box-icon></div>
-                        {% post_to_facebook "Check out my story!" %}
-                        {% post_to_twitter "Check out my story!" '{{audio.get_absolute_url}}' "Share on Twitter" %}
-                        {% post_to_gplus '{{audio.get_absolute_url}}' "Share on Google+!" %}
-                        {% post_to_linkedin '{{audio.get_absolute_url}}' %}
-                        {% send_email "Check out my story!" '{{audio.get_absolute_url}}' "Share via email" %}
-                        {% post_to_reddit "Check out my story!" '{{audio.get_absolute_url}}' %}
-                        {% post_to_telegram "Check out my story!" '{{audio.get_absolute_url}}' %}
-                        {% post_to_whatsapp "Check out my story!" "Share on WhatsApp" %}
-                        {% save_to_pinterest '{{audio.get_absolute_url}}' %}
-                        {% add_pinterest_script %}
-                        {% copy_to_clipboard '{{audio.get_absolute_url}}' "Copy to clipboard!" %}
-                        {% add_copy_script %}
+                <hr>
+                <div class="article-attribute-container">
+                    <div class="article-attr">
+                        <div class="channel-name">
+                            <a href="{{audio.author.get_absolute_url}}"><img src="{{audio.author.channel_logo.url}}" alt=""></a>
+                            <p>{{audio.author.display_name}}</p>
+                        </div>
+                    </div>
+                    <div class="article-attr">
+                        
+                        <div class="date-posted views">
+                            <box-icon class="attr" name='calendar'></box-icon>
+                            <p><span>{{ audio.date_uploaded|timesince|upto:',' }} ago</span></p>
+                        </div>
+                        <div class="views">
+                            <img src="{% static 'images/icons/eye_60px.png' %}" alt="">
+                            <p> <span>{{ audio.views }} view{{ audio.views|pluralize }}</span></p>
+                        </div>
+                    </div>
+                    <div class="article-attr">
+                        <div class="channel-name actions">
+                            <a class="like-btn" data-href="{{audio.get_api_like_url}}" data-likes="{{audio.likes.count}}"
+                                href="{{audio.get_like_url}}">
+                                {% if audio.already_liked %}
+                                <box-icon name='like' type="solid" animation='tada-hover'></box-icon>
+                                {% else %}
+                                <box-icon name='like' animation='tada-hover'></box-icon>
+                                {% endif %}
+                            </a>
+                            <p class="likes-count">{{audio.likes.count}}</p>
+                        </div>
+                        <div class="date-posted actions share-container">
+                            <box-icon class="share-btn" name='share-alt'></box-icon>
+                            <div class="social-share-container">
+                                <div onclick = 'cancelShare()' class="cancel-share"><box-icon name='x'></box-icon></div>
+                                {% post_to_facebook "Check out my story!" %}
+                                {% post_to_twitter "Check out my story!" '{{audio.get_absolute_url}}' "Share on Twitter" %}
+                                {% post_to_gplus '{{audio.get_absolute_url}}' "Share on Google+!" %}
+                                {% post_to_linkedin '{{audio.get_absolute_url}}' %}
+                                {% send_email "Check out my story!" '{{audio.get_absolute_url}}' "Share via email" %}
+                                {% post_to_reddit "Check out my story!" '{{audio.get_absolute_url}}' %}
+                                {% post_to_telegram "Check out my story!" '{{audio.get_absolute_url}}' %}
+                                {% post_to_whatsapp "Check out my story!" "Share on WhatsApp" %}
+                                {% save_to_pinterest '{{audio.get_absolute_url}}' %}
+                                {% add_pinterest_script %}
+                                {% copy_to_clipboard '{{audio.get_absolute_url}}' "Copy to clipboard!" %}
+                                {% add_copy_script %}
+                            </div>
+                        </div>
+                        <div class="actions">
+                            <box-icon name='bookmark'></box-icon>
+                        </div>
                     </div>
                 </div>
-                <div class="actions">
-                    <box-icon name='bookmark'></box-icon>
-                </div>
+                
             </div>
+            <div class="article-body">
+                {{audio.video_description}}
+            </div>
+
         </div>
-        
     </div>
-    <div class="article-body">
-        {{audio.video_description}}
-    </div>
-
 </div>
-
 
 {% endblock content %}

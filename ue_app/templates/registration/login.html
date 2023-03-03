@@ -36,7 +36,10 @@
                 <input class="sign-up-button" type="submit" value="Login" />
                 <input type="hidden" name="next" value="{{ next }}" />
             </form>
-    
+            <div class="showpassword-container">
+                <input type="checkbox" onclick="showPassword(this)">
+                <p class="showpassword-text">Show Password</p>
+            </div>
             {# Assumes you setup the password_reset view in your URLconf #}
             <p><a href="{% url 'ue_app:password_reset' %}" class="text-info">Lost password?</a>
             </p>

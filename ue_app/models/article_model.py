@@ -46,6 +46,7 @@ class MediumInfo(models.Model):
     @property
     def total_likes(self):
         return self.likes.count()
+    
 
     class Meta:
         abstract = True

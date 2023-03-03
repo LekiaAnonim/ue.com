@@ -28,14 +28,11 @@ class HomeView(TemplateView):
         videos = Video.objects.all()
         categories = Category.objects.all()
         channels = Channel.objects.all()
-        # login_user = Profile.objects.filter(id=request.user.id)
-        
-        # context['login_user'] = login_user
-        context['articles'] = articles
-        context['audios'] = audios
-        context['videos'] = videos
-        context['categories'] = categories
-        context['channels'] = channels
+        # context['articles'] = articles
+        # context['audios'] = audios
+        # context['videos'] = videos
+        # context['categories'] = categories
+        # context['channels'] = channels
         context["login_form"]= AuthenticationForm()
         return context
 

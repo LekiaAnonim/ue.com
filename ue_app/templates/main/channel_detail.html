@@ -4,230 +4,314 @@
 
 {% block category_display %}
 {% endblock %}
-
-{% block content %}
-{% load social_share %}
 <div class="content-container">
     <div class="content-page">
-        <div class="channel-container">
-            <div class="channel-info">
-                <div class="channel-banner">
-                    <img src="{{channel.banner.url}}" alt="">
+{% block content %}
+{% load social_share %}
+
+        <div class="channel-page">
+            <div class="channel-container">
+                <div class="channel-info">
+                    <div class="channel-banner">
+                        <img src="{{channel.banner.url}}" alt="">
+                    </div>
+                    <div class="channel-detail">
+                        <div class="channel-name-photo">
+                            <div class="photo"><img src="{{channel.channel_logo.url}}" alt=""></div>
+                            <div class="name-followers">
+                                <div class="channel-name"><h3>{{channel.display_name}}</h3></div>
+                                <div class="channel-followers"><p>Followers</p><h6 class="follows-count">{{channel.follow.count}}</h6></div>
+                            </div>
+                        </div>
+                        <div class="channel-stats">
+                            <div class="channel-stats-attr"><h6>Created:</h6> <p>{{channel.date_created|date:"D M Y"}}</p></div>
+                            <div class="channel-stats-attr">
+                                <h6>Views:</h6>
+                                <p>3k</p>
+                            </div>
+                            <div class="channel-stats-attr">
+                                <h6>Likes:</h6>
+                                <p>3k</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="channel-detail">
-                    <div class="channel-name-photo">
-                        <div class="photo"><img src="{{channel.channel_logo.url}}" alt=""></div>
-                        <div class="name-followers">
-                            <div class="channel-name"><h3>{{channel.display_name}}</h3></div>
-                            <div class="channel-followers"><p>Followers</p><h6 class="follows-count">{{channel.follow.count}}</h6></div>
+                
+                    <div class="follow-channel">
+                        <a class="following-btn" data-href="{{channel.get_api_follow_url}}" data-follows="{{channel.follow.count}}" href="{{channel.get_follow_url}}">
+                            <button>
+                                {% if channel.already_following %}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    style="fill: rgb(252, 42, 88);transform: ;msFilter:;">
+                                    <path
+                                        d="M20.205 4.791a5.938 5.938 0 0 0-4.209-1.754A5.906 5.906 0 0 0 12 4.595a5.904 5.904 0 0 0-3.996-1.558 5.942 5.942 0 0 0-4.213 1.758c-2.353 2.363-2.352 6.059.002 8.412L12 21.414l8.207-8.207c2.354-2.353 2.355-6.049-.002-8.416z">
+                                    </path>
+                                </svg>
+                                {% else %}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    style="fill: rgba(238, 236, 236, 1);transform: ;msFilter:;">
+                                    <path
+                                        d="M20.205 4.791a5.938 5.938 0 0 0-4.209-1.754A5.906 5.906 0 0 0 12 4.595a5.904 5.904 0 0 0-3.996-1.558 5.942 5.942 0 0 0-4.213 1.758c-2.353 2.363-2.352 6.059.002 8.412L12 21.414l8.207-8.207c2.354-2.353 2.355-6.049-.002-8.416z">
+                                    </path>
+                                </svg> 
+                                {% endif %}
+                                Follow
+                            </button>
+                        </a>
+                    </div>
+                
+                <div class="channel-about">
+                    <div class="channel-about-head">
+                        <div>
+                            <h2> <span>About</span> {{channel.display_name}}</h2>
+                        </div>
+                        <div class="channel-owner">
+                            <p>Owner</p>
+                            <div class="channel-owner-photo-name">
+                                <img src="{{channel.profile.photo.url}}" alt="">
+                                <h5>{{channel.profile.user.username}}</h5>
+                            </div>
+                        </div>
+                        <div class="channel-about-social">
+                        
                         </div>
                     </div>
-                    <div class="channel-stats">
-                        <div class="channel-stats-attr"><h6>Created:</h6> <p>{{channel.date_created}}</p></div>
-                        <div class="channel-stats-attr">
-                            <h6>Views:</h6>
-                            <p>3k</p>
-                        </div>
-                        <div class="channel-stats-attr">
-                            <h6>Likes:</h6>
-                            <p>3k</p>
-                        </div>
+                    <div class="channel-about-content">
+                        <p>{{channel.description}}.</p>
                     </div>
+                </div>
+            </div>
+    
+            <hr>
+    
+            <div class="medium-tabs">
+                <div class="medium-tab tablinks" onclick="openCity(event, 'video')" id="defaultOpen">
+                    <p> Videos</p>
+                </div>
+                <div class="medium-tab tablinks" onclick="openCity(event, 'article')">
+                    <p>Articles</p>
+                </div>
+                <div class="medium-tab tablinks" onclick="openCity(event, 'audio')">
+                    <p>Audios</p>
                 </div>
             </div>
             
-                <div class="follow-channel">
-                    <a class="following-btn" data-href="{{channel.get_api_follow_url}}" data-follows="{{channel.follow.count}}" href="{{channel.get_follow_url}}">
-                        <button>
-                            {% if channel.already_following %}
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                style="fill: rgb(252, 42, 88);transform: ;msFilter:;">
-                                <path
-                                    d="M20.205 4.791a5.938 5.938 0 0 0-4.209-1.754A5.906 5.906 0 0 0 12 4.595a5.904 5.904 0 0 0-3.996-1.558 5.942 5.942 0 0 0-4.213 1.758c-2.353 2.363-2.352 6.059.002 8.412L12 21.414l8.207-8.207c2.354-2.353 2.355-6.049-.002-8.416z">
-                                </path>
-                            </svg>
-                            {% else %}
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                style="fill: rgba(238, 236, 236, 1);transform: ;msFilter:;">
-                                <path
-                                    d="M20.205 4.791a5.938 5.938 0 0 0-4.209-1.754A5.906 5.906 0 0 0 12 4.595a5.904 5.904 0 0 0-3.996-1.558 5.942 5.942 0 0 0-4.213 1.758c-2.353 2.363-2.352 6.059.002 8.412L12 21.414l8.207-8.207c2.354-2.353 2.355-6.049-.002-8.416z">
-                                </path>
-                            </svg> 
-                            {% endif %}
-                            Follow
-                        </button>
-                    </a>
-                </div>
             
-            <div class="channel-about">
-                <div class="channel-about-head">
-                    <div>
-                        <h2> <span>About</span> {{channel.display_name}}</h2>
-                    </div>
-                    <div class="channel-owner">
-                        <p>Owner</p>
-                        <div class="channel-owner-photo-name">
-                            <img src="{{channel.profile.photo.url}}" alt="">
-                            <h5>{{channel.profile.user.username}}</h5>
-                        </div>
-                    </div>
-                    <div class="channel-about-social">
-                    
-                    </div>
-                </div>
-                <div class="channel-about-content">
-                    <p>{{channel.description}}.</p>
-                </div>
-            </div>
-        </div>
-
-        <hr>
-
-        <div class="medium-tabs">
-            <div class="medium-tab tablinks" onclick="openCity(event, 'video')" id="defaultOpen">
-                <p> Videos</p>
-            </div>
-            <div class="medium-tab tablinks" onclick="openCity(event, 'article')">
-                <p>Articles</p>
-            </div>
-            <div class="medium-tab tablinks" onclick="openCity(event, 'audio')">
-                <p>Audios</p>
-            </div>
-        </div>
-        
-        
-        <div class="cart-section tabcontent" id="video">
-            <div class="popular-medium-container">
-                {% if videos %}
-                <div class="mediun-container">
-                    {% for video in videos %}
-                    {% if video.author.display_name == channel.display_name %}
-                    <div class="popular-videos-card-tab-display">
-                        <a href="{{video.get_absolute_url}}">
-                            <div class="popular-video-card">
-                                <div class="video-display">
-                                    <div class="video-cover">
-                                        <video src="{{video.video_upload.url}}" controls></video>
-                                    </div>
-                                </div>
-                                <div class="video-status-views">
-                                    <div class="video-title">
-                                        <h5>{{video.title}}</h5>
-                                    </div>
-                                    <div class="video-name-views">
-                                        <div class="channel-name">
-                                            <img src="{{video.author.channel_logo.url}}" alt="">
-                                            <p>{{video.author.display_name}}</p>
-                                        </div>
-                                        <div class="views">
-                                            <p>{{ video.views }} view{{ video.views|pluralize }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    {% else %}
-                    <p></p>
-                    {% endif %}
-                </div>
-                {% endfor %}
-                {% else %}
-                <p>No video available</p>
-                {% endif %}
-            </div>
-        </div>
-        
-        <div class="cart-section tabcontent" id="article">
-            <div class="popular-medium-container">
-                {% if articles %}
-                <div class="mediun-container">
-                    {% for article in articles %}
-                    {% if article.author.display_name == channel.display_name %}
-                    <div class="popular-videos-card-tab-display">
-                        <a href="{{article.get_absolute_url}}">
-                            <div class="popular-video-card">
-                                <div class="video-display">
-                                    <div class="video-cover">
-                                        <img src="{{article.feature_image.url}}">
-                                    </div>
-                                </div>
-                                <div class="video-status-views">
-                                    <div class="video-title">
-                                        <h5>{{article.title}}</h5>
-                                    </div>
-                                    <div class="video-name-views">
-                                        <div class="channel-name">
-                                            <img src="{{article.author.channel_logo.url}}" alt="">
-                                            <p>{{article.author.display_name}}</p>
-                                        </div>
-                                        <div class="views">
-                                            <p>{{ article.views }} view{{ article.views|pluralize }}</p>
-                                        </div>
-                                    </div>
-        
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    {% else %}
-                    <p></p>
-                    {% endif %}
-                </div>
-                {% endfor %}
-                {% else %}
-                <p>No article available</p>
-                {% endif %}
-            </div>
-        </div>
-        
-        <div class="cart-section tabcontent" id="audio">
-            <div class="popular-medium-container">
-                {% if audios %}
-                <div class="mediun-container">
-                    {% for audio in audios %}
-                    {% if audio.author.display_name == channel.display_name %}
-                    <a href="{{audio.get_absolute_url}}">
+            <div class="cart-section tabcontent" id="video">
+                <div class="popular-medium-container">
+                    {% if videos %}
+                    <div class="mediun-container">
+                        {% for video in videos %}
+                        {% if video.author.display_name == channel.display_name %}
                         <div class="popular-videos-card-tab-display">
-                            <div class="popular-video-card">
-                                <div class="video-display">
-                                    <div class="video-cover">
-                                        <img src="{{audio.feature_image.url}}">
-                                        <div class="audio-cover-1">
-                                            <audio src="{{audio.audio_upload.url}}" controls></audio>
+                            <a href="{{video.get_absolute_url}}">
+                                <div class="popular-video-card">
+                                    <div class="video-display">
+                                        <div class="video-cover">
+                                            <video src="{{video.video_upload.url}}" controls></video>
                                         </div>
+                                    </div>
+                                    <div class="video-status-views">
+                                        <div class="video-title">
+                                            <h5>{{video.title|title}}</h5>
+                                        </div>
+                                        <div class="video-name-views">
+                                            <div class="channel-name">
+                                                <img src="{{video.author.channel_logo.url}}" alt="">
+                                                <p>{{video.author.display_name}}</p>
+                                            </div>
+                                            <div class="views">
+                                                <p>{{ video.views }} view{{ video.views|pluralize }}</p>
+                                            </div>
+                                        </div>
+                                        
                                     </div>
                                 </div>
-                                <div class="video-status-views">
-                                    <div class="video-title">
-                                        <h5>{{audio.title}}</h5>
+                            </a>
+                            <div class="content-more-option">
+                                {% if request.user.is_authenticated %}
+                                <div class="delete-edit">
+                                    <div class="delete-content">
+                                        <svg class="{{video.slug}}" xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48"><path d="M261 936q-24 0-42-18t-18-42V306h-41v-60h188v-30h264v30h188v60h-41v570q0 24-18 42t-42 18H261Zm106-146h60V391h-60v399Zm166 0h60V391h-60v399Z"/></svg>
                                     </div>
-                                    <div class="video-name-views">
-                                        <div class="channel-name">
-                                            <img src="{{audio.author.channel_logo.url}}" alt="">
-                                            <p>{{audio.author.display_name}}</p>
-                                        </div>
-                                        <div class="views">
-                                            <p>{{ audio.views }} view{{ audio.views|pluralize }}</p>
-                                        </div>
+                                    <div class="edit-content">
+                                        <a href="{% url 'ue_app:video_update' video.author.profile.user.username video.slug %}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48"><path d="M794 390 666 262l42-42q17-17 42.5-16.5T793 221l43 43q17 17 17 42t-17 42l-42 42Zm-42 42L248 936H120V808l504-504 128 128Z"/></svg>
+                                        </a>
                                     </div>
-        
                                 </div>
+                                <div class="delete-pop-up" id="{{video.slug}}">
+                                    <div class="alert-info">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" transform: ;msFilter:;"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+                                        <h6>Are sure you want to delete this channel?</h6>
+                                    </div>
+                                    <div class="delete-button">
+                                        <button class="cancel-action" onclick="cancelDeletePromptCard(this)">Cancel</button>
+                                        <a href="{% url 'ue_app:video_delete' video.author.profile.user.username video.slug %}">
+                                            <button class="delete-action">Delete</button>
+                                        </a>
+                                    </div>
+                                </div>
+                                {% endif %}
                             </div>
                         </div>
-                    </a>
+                        {% else %}
+                        <p></p>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    
                     {% else %}
-                    <p>No audio available </p>
+                    <p>No video available</p>
                     {% endif %}
                 </div>
-                {% endfor %}
-                {% else %}
-                <p>No audio available</p>
-                {% endif %}
+            </div>
+            
+            <div class="cart-section tabcontent" id="article">
+                <div class="popular-medium-container">
+                    {% if articles %}
+                    <div class="mediun-container">
+                        {% for article in articles %}
+                        {% if article.author.display_name == channel.display_name %}
+                        <div class="popular-videos-card-tab-display">
+                            <a href="{{article.get_absolute_url}}">
+                                <div class="popular-video-card">
+                                    <div class="video-display">
+                                        <div class="video-cover">
+                                            <img src="{{article.feature_image.url}}">
+                                        </div>
+                                    </div>
+                                    <div class="video-status-views">
+                                        <div class="video-title">
+                                            <h5>{{article.title|title}}</h5>
+                                        </div>
+                                        <div class="video-name-views">
+                                            <div class="channel-name">
+                                                <img src="{{article.author.channel_logo.url}}" alt="">
+                                                <p>{{article.author.display_name}}</p>
+                                            </div>
+                                            <div class="views">
+                                                <p>{{ article.views }} view{{ article.views|pluralize }}</p>
+                                            </div>
+                                        </div>
+            
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="content-more-option">
+                                {% if request.user.is_authenticated %}
+                                <div class="delete-edit">
+                                    <div class="delete-content">
+                                        <svg class="{{article.slug}}" xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48"><path d="M261 936q-24 0-42-18t-18-42V306h-41v-60h188v-30h264v30h188v60h-41v570q0 24-18 42t-42 18H261Zm106-146h60V391h-60v399Zm166 0h60V391h-60v399Z"/></svg>
+                                    </div>
+                                    <div class="edit-content">
+                                        <a href="{% url 'ue_app:article_update' article.author.profile.user.username article.slug %}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48"><path d="M794 390 666 262l42-42q17-17 42.5-16.5T793 221l43 43q17 17 17 42t-17 42l-42 42Zm-42 42L248 936H120V808l504-504 128 128Z"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="delete-pop-up" id="{{article.slug}}">
+                                    <div class="alert-info">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" transform: ;msFilter:;"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+                                        <h6>Are sure you want to delete this channel?</h6>
+                                    </div>
+                                    <div class="delete-button">
+                                        <button class="cancel-action" onclick="cancelDeletePromptCard(this)">Cancel</button>
+                                        <a href="{% url 'ue_app:article_delete' article.author.profile.user.username article.slug %}">
+                                            <button class="delete-action">Delete</button>
+                                        </a>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% else %}
+                        <p></p>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    
+                    {% else %}
+                    <p>No article available</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="cart-section tabcontent" id="audio">
+                <div class="popular-medium-container">
+                    {% if audios %}
+                    <div class="mediun-container">
+                        {% for audio in audios %}
+                        {% if audio.author.display_name == channel.display_name %}
+                        
+                            <div class="popular-videos-card-tab-display">
+                                <a href="{{audio.get_absolute_url}}">
+                                    <div class="popular-video-card">
+                                        <div class="video-display">
+                                            <div class="video-cover">
+                                                <img src="{{audio.feature_image.url}}">
+                                                <div class="audio-cover-1">
+                                                    <audio src="{{audio.audio_upload.url}}" controls></audio>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="video-status-views">
+                                            <div class="video-title">
+                                                <h5>{{audio.title|title}}</h5>
+                                            </div>
+                                            <div class="video-name-views">
+                                                <div class="channel-name">
+                                                    <img src="{{audio.author.channel_logo.url}}" alt="">
+                                                    <p>{{audio.author.display_name}}</p>
+                                                </div>
+                                                <div class="views">
+                                                    <p>{{ audio.views }} view{{ audio.views|pluralize }}</p>
+                                                </div>
+                                            </div>
+                
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="content-more-option">
+                                    {% if request.user.is_authenticated %}
+                                    <div class="delete-edit">
+                                        <div class="delete-content">
+                                            <svg class="{{audio.slug}}" xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48"><path d="M261 936q-24 0-42-18t-18-42V306h-41v-60h188v-30h264v30h188v60h-41v570q0 24-18 42t-42 18H261Zm106-146h60V391h-60v399Zm166 0h60V391h-60v399Z"/></svg>
+                                        </div>
+                                        <div class="edit-content">
+                                            <a href="{% url 'ue_app:audio_update' audio.author.profile.user.username audio.slug %}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48"><path d="M794 390 666 262l42-42q17-17 42.5-16.5T793 221l43 43q17 17 17 42t-17 42l-42 42Zm-42 42L248 936H120V808l504-504 128 128Z"/></svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="delete-pop-up" id="{{audio.slug}}">
+                                        <div class="alert-info">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" transform: ;msFilter:;"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+                                            <h6>Are sure you want to delete this channel?</h6>
+                                        </div>
+                                        <div class="delete-button">
+                                            <button class="cancel-action" onclick="cancelDeletePromptCard(this)">Cancel</button>
+                                            <a href="{% url 'ue_app:audio_delete' audio.author.profile.user.username audio.slug %}">
+                                                <button class="delete-action">Delete</button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        
+                        {% else %}
+                        <p>No audio available </p>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    
+                    {% else %}
+                    <p>No audio available</p>
+                    {% endif %}
+                </div>
             </div>
         </div>
-    </div>
-</div>
-
-
 {% endblock content %}
+</div>
+</div>

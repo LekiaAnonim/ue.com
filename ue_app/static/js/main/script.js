@@ -83,3 +83,12 @@ function cancelDeletePromptCard(btn) {
     }
     
 }
+
+let leftAside = document.querySelector('.recommender-channels');
+function displayLeftAside(){
+    leftAside.style.display = 'block';
+}
+
+function removeLeftAside(){
+    leftAside.style.display = 'none';
+}

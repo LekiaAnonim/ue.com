@@ -1,5 +1,6 @@
 {% extends 'main/base.html' %}
 
+
 {% block category_display %}
     <h1>Popular Categories</h1>
 {% endblock category_display %}
@@ -15,7 +16,7 @@
                 <div class="category-card">
                     <img src="{{category.image.url}}" alt="category.name">
                     <div>
-                        <h5>{{category.name}}</h5>
+                        <h5>{{category.name|title}}</h5>
                     </div>
                     <p>470.5K views</p>
                 </div>
