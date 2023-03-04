@@ -2,6 +2,7 @@ from django.views.generic import ListView, DetailView, RedirectView
 from ue_app.models.channel_model import Channel, Profile
 from ue_app.models.article_model import MediumInfo, Article
 from ue_app.models.audio_model import Audio
+from ue_app.forms.main.comment_form import VideoCommentForm
 from ue_app.models.category_model import Category
 from ue_app.models.comment_model import Comment, ArticleComment, AudioComment, VideoComment
 from ue_app.models.video_model import Video
@@ -12,6 +13,9 @@ from rest_framework.views import APIView
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.text import slugify
 from django.urls import reverse_lazy
+from django.views.generic.edit import FormMixin
+from django.http import HttpResponse
+from django.http import JsonResponse
 
 
 class VideoListView(ListView):
@@ -25,12 +29,14 @@ class VideoListView(ListView):
         # Call the base implementation first to get the context
         context = super(VideoListView, self).get_context_data(**kwargs)
 
+
         articles = Article.objects.all()
         audios = Audio.objects.all()
         videos = Video.objects.all()
         categories = Category.objects.all()
         channels = Channel.objects.all()
 
+        context['form'] = VideoCommentForm()
         context['articles'] = articles
         context['audios'] = audios
         context['videos'] = videos
@@ -43,6 +49,7 @@ class VideoListView(ListView):
 class VideoDetailView(DetailView):
     model = Video
     template_name = "main/video_detail.html"
+    # form_class = VideoCommentForm
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -58,14 +65,29 @@ class VideoDetailView(DetailView):
         videos = Video.objects.all()
         categories = Category.objects.all()
         channels = Channel.objects.all()
+        video_comments = VideoComment.objects.all()
 
         context['articles'] = articles
         context['audios'] = audios
         context['videos'] = videos
         context['categories'] = categories
         context['channels'] = channels
-
+        context['video_comments'] = video_comments
         return context
+    
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        print(self.object)
+        comment = request.POST['comment']
+        user= request.user
+        new_comment = VideoComment(comment=comment,user=user, video=self.object)
+        new_comment.save()
+        return JsonResponse('New comment added')
+
+    def form_valid(self, form):
+        
+        form.save()
+        return super(VideoDetailView, self).form_valid(form)
 
 
 class VideoLikeToggleView(RedirectView):

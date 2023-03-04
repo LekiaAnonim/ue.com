@@ -5,49 +5,45 @@
 
         {% if categories %}
         {% for category in categories %}
-        {% if category_article %}
-        {% for article in category_article %}
-
-        {% if article.category.name == category.name %}
-
-            <div class="content-title">
-                <h1>{{category.name|title}}</h1>
-            </div>
-
-            <div class="popular-videos-card-tab-display">
-                <div class="popular-video-card">
-                    <div class="video-display">
-                        <div class="video-cover">
-                            <img src="{{article.feature_image.url}}">
-                        </div>
-                    </div>
-                    <div class="video-status-views">
-                        <div class="video-title">
-                            <h5>{{article.title|title}}</h5>
-                        </div>
-                        <div class="video-name-views">
-                            <div class="channel-name">
-                                <img src="{{article.author.photo.url}}" alt="">
-                                <p>{{article.author.display_name}}</p>
-                            </div>
-                            <div class="views">
-                                <p>12.6K</p>
+        <div class="category-medium-container">
+            {% if category_article %}
+            {% for article in category_article %}
+            {% if article.category.name == category.name %}
+                {% comment %} <div class="content-title">
+                    <h1>{{category.name|title}}</h1>
+                </div> {% endcomment %}
+                <div class="popular-videos-card-tab-display">
+                    <div class="popular-video-card">
+                        <div class="video-display">
+                            <div class="video-cover">
+                                <img src="{{article.feature_image.url}}">
                             </div>
                         </div>
+                        <div class="video-status-views">
+                            <div class="video-title">
+                                <h5>{{article.title|title}}</h5>
+                            </div>
+                            <div class="video-name-views">
+                                <div class="channel-name">
+                                    <img src="{{article.author.channel_logo.url}}" alt="">
+                                    <p>{{article.author.display_name}}</p>
+                                </div>
+                                <div class="views">
+                                    <p>12.6K</p>
+                                </div>
+                            </div>
 
+                        </div>
                     </div>
                 </div>
-            </div>
-
-        {% else %}
-        <p></p>
-        {% endif %}
-
-        {% endfor %}
-        {% else %}
-        <p></p>
-        {% endif %}
-
+            {% else %}
+            <p></p>
+            {% endif %}
+            {% endfor %}
+            {% else %}
+            <p></p>
+            {% endif %}
+        </div>
         {% endfor %}
         {% else %}
         <p>No category available</p>

@@ -96,7 +96,7 @@ class VideoAdmin(admin.ModelAdmin):
 
 @admin.register(ArticleComment)
 class ArticleCommentAdmin(admin.ModelAdmin):
-    list_display = ('channel', 'comment', 'parent',
+    list_display = ('article','user', 'comment', 'parent',
                     'date_created', 'approved', 'article')
     exclude = ['date_created', 'date_updated']
     empty_value_display = '-None-'
@@ -104,7 +104,7 @@ class ArticleCommentAdmin(admin.ModelAdmin):
 
 @admin.register(AudioComment)
 class AudioCommentAdmin(admin.ModelAdmin):
-    list_display = ('channel', 'comment', 'parent',
+    list_display = ('audio','user', 'comment', 'parent',
                     'date_created', 'approved')
     exclude = ['date_created', 'date_updated']
     empty_value_display = '-None-'
@@ -112,7 +112,7 @@ class AudioCommentAdmin(admin.ModelAdmin):
 
 @admin.register(VideoComment)
 class VideoCommentAdmin(admin.ModelAdmin):
-    list_display = ('channel', 'comment', 'parent',
+    list_display = ('video','user', 'comment', 'parent',
                     'date_created', 'approved')
     exclude = ['date_created', 'date_updated']
     empty_value_display = '-None-'

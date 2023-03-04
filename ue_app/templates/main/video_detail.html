@@ -74,11 +74,98 @@
                 
             </div>
             <div class="article-body">
-                {{article.video_description}}
+                {% if video.video_description %}
+                {{video.video_description}}
+                {% else %}
+                <p></p>
+                {% endif %}
             </div>
+            <div class="comment-container">
+                <div class="comment-article">
+                    <div class="parent-comment-medium">
+                        <div class="channel-photo">
+                            <img src="{{video.author.channel_logo.url}}" alt="">
+                        </div>
+                        <div class="channel-name-content-title">
+                            <div class="channel-name">
+                                <p>{{video.author.display_name}}</p>
+                            </div>
+                            <div class="content-title">
+                                <p>{{video.title|title}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="connector"></div>
+                    <div class="user-comment-section">
+                        <div class="channel-photo userimage">
+                            <img src="{{video.author.profile.photo.url}}" alt="">
+                        </div>
+                        <div class="form-container">
+                            <form id="comment-form" action="" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="CommentfieldWrapper">
+                                    <textarea name="comment" id="comment" cols="30" rows="2" placeholder="Write your comment..."></textarea>
+                                   
+                                </div>
+                                <input type="submit" value="Comment">
+                            </form>
+                        </div>
+                    </div>
+                    <script>
+                        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
+                        document.getElementById('comment-form').addEventListener('submit', submitForm);
+
+                        function submitForm(e) {
+                            e.preventDefault();
+
+                            fetch("{% url 'ue_app:video_detail' video.author.profile.user.username video.slug %}", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                                'X-CSRFToken': csrftoken,
+                            },
+                            body: new URLSearchParams({
+                                'comment': document.querySelector('.user-comment-section textarea[name="comment"]').value,
+                            }),
+                            })
+                            .then(response => {
+                                response.json();
+                                console.log(response.status)
+                            })
+                            .then(data => console.log(data))
+                            .catch(error => console.error(error));
+                        }
+
+                        
+                    </script>
+                </div>
+                <div class="medium-comments">
+                    {% for comment in video_comments %}
+                    {% if comment.video.title == video.title %}
+                    <div class="comment">
+                        <div class="comment-head parent-comment-medium">
+                            <div class="comment-image">
+                                <img src="{{comment.video.author.profile.photo.url}}" alt="">
+                            </div>
+                            <div class="comment-head-text channel-name-content-title">
+                                <div class="channel-name">
+                                    <p>{{comment.video.author.display_name}}</p>
+                                </div>
+                                <div class="content-title">
+                                    <p><span>Comment on</span> {{comment.video.title|title}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comment-content">
+                            <p>{{comment.comment}}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
 {% endblock content %}
