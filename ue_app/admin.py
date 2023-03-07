@@ -3,7 +3,7 @@ from ue_app.models.channel_model import Channel, Profile
 from ue_app.models.article_model import MediumInfo, Article
 from ue_app.models.audio_model import Audio
 from ue_app.models.category_model import Category
-from ue_app.models.comment_model import Comment, ArticleComment, AudioComment, VideoComment
+from ue_app.models.comment_model import Comment, ArticleComment, AudioComment, VideoComment  #, VideoCommentReply
 from ue_app.models.video_model import Video
 
 # Register your models here.
@@ -115,4 +115,11 @@ class VideoCommentAdmin(admin.ModelAdmin):
     list_display = ('video','user', 'comment', 'parent',
                     'date_created', 'approved')
     exclude = ['date_created', 'date_updated']
-    empty_value_display = '-None-'
+    # empty_value_display = '-None-'
+
+# @admin.register(VideoCommentReply)
+# class VideoCommentReplyAdmin(admin.ModelAdmin):
+#     list_display = ('video', 'parent_comment', 'user', 'comment', 'parent',
+#                     'date_created', 'approved')
+#     exclude = ['date_created', 'date_updated']
+#     empty_value_display = '-None-'

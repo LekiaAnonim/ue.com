@@ -37,6 +37,16 @@ class VideoComment(Comment):
     class Meta:
         verbose_name = "Video Comment"
 
+# class VideoCommentReply(Comment):
+#     video = models.ForeignKey(
+#         Video, null=True, blank=True, on_delete=models.CASCADE)
+#     parent_comment = models.ForeignKey(
+#         VideoComment, null=True, blank=True, on_delete=models.SET_NULL)
+    
+
+#     class Meta:
+#         verbose_name = "Video Comment Reply"
+
 
 class AudioComment(Comment):
     audio = models.ForeignKey(

@@ -62,6 +62,8 @@ function showPassword(checkbox) {
   
 }
 
+// DELETE CONTENT
+
 let deleteBtn = document.querySelectorAll(".delete-content svg");
 let deleteCard = document.querySelectorAll(".delete-pop-up");
 deleteBtn.forEach((dBtn)=>{
@@ -91,4 +93,38 @@ function displayLeftAside(){
 
 function removeLeftAside(){
     leftAside.style.display = 'none';
+}
+
+// REPLY COMMENT JS
+
+const replyCommentCont = document.querySelectorAll('.reply-comment-form-container');
+let replyBtn = document.querySelectorAll(".reply-button");
+// function displayReplyForm() {
+//     replyBtn.forEach(rBtn => {
+//         replyCommentCont.forEach(element => {
+//             console.log(rBtn.classList[0], element.id)
+//             if (rBtn.classList[0] == element.id) {
+//                 element.classList.add('display-reply-comment-container');
+//             };
+//         });
+//     }); 
+// }
+
+replyBtn.forEach((rBtn)=>{
+    rBtn.addEventListener('click',()=>{
+        replyCommentCont.forEach((rCard)=>{
+            console.log(rBtn.classList[0], rBtn.id)
+            if (rBtn.classList[0] == rCard.id) {
+                rCard.classList.add('display-reply-comment-container');
+            };
+        })
+        document.querySelector('.comment-form-class').classList.add('comment-form-hide');
+    })
+})
+
+function displayCommentContainer() {
+    document.querySelector('.comment-container').style.display = 'block';
+}
+function hideCommentContainer() {
+    document.querySelector('.comment-container').style.display = 'none';
 }

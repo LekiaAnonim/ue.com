@@ -81,6 +81,9 @@
                 {% endif %}
             </div>
             <div class="comment-container">
+                <div class="hide-comment-container" onclick="hideCommentContainer()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z"></path></svg>
+                </div>
                 <div class="comment-article">
                     <div class="parent-comment-medium">
                         <div class="channel-photo">
@@ -98,72 +101,144 @@
                     <div class="connector"></div>
                     <div class="user-comment-section">
                         <div class="channel-photo userimage">
-                            <img src="{{video.author.profile.photo.url}}" alt="">
+                            <img src="{{user.account.photo.url}}" alt="">
                         </div>
                         <div class="form-container">
-                            <form id="comment-form" action="" method="post" enctype="multipart/form-data">
+                            <form class="comment-form-class" id="comment-form" action="" method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div class="CommentfieldWrapper">
                                     <textarea name="comment" id="comment" cols="30" rows="2" placeholder="Write your comment..."></textarea>
-                                   
+                                    <input type="hidden" name="parent_comment">
                                 </div>
                                 <input type="submit" value="Comment">
                             </form>
                         </div>
-                    </div>
-                    <script>
-                        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-
-                        document.getElementById('comment-form').addEventListener('submit', submitForm);
-
-                        function submitForm(e) {
-                            e.preventDefault();
-
-                            fetch("{% url 'ue_app:video_detail' video.author.profile.user.username video.slug %}", {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded',
-                                'X-CSRFToken': csrftoken,
-                            },
-                            body: new URLSearchParams({
-                                'comment': document.querySelector('.user-comment-section textarea[name="comment"]').value,
-                            }),
-                            })
-                            .then(response => {
-                                response.json();
-                                console.log(response.status)
-                            })
-                            .then(data => console.log(data))
-                            .catch(error => console.error(error));
-                        }
-
-                        
-                    </script>
+                    </div>  
                 </div>
                 <div class="medium-comments">
                     {% for comment in video_comments %}
                     {% if comment.video.title == video.title %}
                     <div class="comment">
-                        <div class="comment-head parent-comment-medium">
-                            <div class="comment-image">
-                                <img src="{{comment.video.author.profile.photo.url}}" alt="">
+                        <div class="parent-comment-container">
+                            <div class="comment-head parent-comment-medium">
+                                <div class="comment-image">
+                                    <img src="{{comment.video.author.profile.photo.url}}" alt="">
+                                </div>
+                                <div class="comment-head-text channel-name-content-title">
+                                    <div class="channel-name">
+                                        <p>{{comment.video.author.display_name}} <span>{{comment.date_created}}</span></p>
+                                    </div>
+                                    <div class="content-title">
+                                        <p><span>Comment on</span> {{comment.video.title|title}}</p>
+                                    </div>
+                                </div>
+                                
                             </div>
-                            <div class="comment-head-text channel-name-content-title">
-                                <div class="channel-name">
-                                    <p>{{comment.video.author.display_name}}</p>
+                            <!-- <div class="connector"></div> -->
+                            <div class="comment-content">
+                                <p>{{comment.comment}}</p>
+                            </div>
+                            <button class="{{comment.pk}} reply-button">reply</button>
+                        </div>
+                        <div class="reply-comment-container">
+                            
+                            {% for reply in video_comment_replies %}
+                            {% if reply.video.title == video.title %}
+                            {% if reply.parent == comment %}
+                            <div class="comment-reply">
+                                <div class="connector"></div>
+                                <div class="comment-head parent-comment-medium">
+                                    <div class="comment-image">
+                                        <img src="{{reply.video.author.profile.photo.url}}" alt="">
+                                    </div>
+                                    <div class="comment-head-text channel-name-content-title">
+                                        <div class="channel-name">
+                                            <p>{{reply.video.author.display_name}} <span>{{comment.date_created}}</span></p>
+                                        </div>
+                                        <div class="content-title">
+                                            <p><span>Replied to</span> @{{reply.user.username}} <span>on</span> {{reply.video.author.display_name}}</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="content-title">
-                                    <p><span>Comment on</span> {{comment.video.title|title}}</p>
+                                <!-- <div class="connector"></div> -->
+                                <div class="comment-content">
+                                    <p>{{reply.comment}}</p>
                                 </div>
+                                <button class="{{comment.pk}} reply-button">reply</button>
+                            </div>
+                            {% endif %}
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="reply-comment">
+                            
+                            <div id="{{comment.pk}}" class="reply-comment-form-container">
+                                
+                                <div class="user-comment-section">
+                                    <div class="channel-photo userimage">
+                                        <img src="{{user.account.photo.url}}" alt="">
+                                    </div>
+                                    <div class="form-container">
+                                        <form id="reply-form" action="" method="post" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <div class="CommentfieldWrapper">
+                                                <textarea name="comment" id="comment" cols="30" rows="1" placeholder="Write your comment..."></textarea>
+                                                <input type="hidden" name="parent_comment" value="{{comment.pk}}">
+                                            </div>
+                                            <input class="reply-submit" type="submit" value="Reply">
+                                        </form>
+                                    </div>
+                                </div>
+    
                             </div>
                         </div>
-                        <div class="comment-content">
-                            <p>{{comment.comment}}</p>
-                        </div>
+                        <script>
+                            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    
+                            document.getElementById('comment-form').addEventListener('submit', submitForm);
+                            document.getElementById('reply-form').addEventListener('submit', submitForm);
+    
+                            function submitForm(e) {
+                                e.preventDefault();
+    
+                                fetch("{% url 'ue_app:video_detail' video.author.profile.user.username video.slug %}", {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                    'X-CSRFToken': csrftoken,
+                                },
+                                body: new URLSearchParams({
+                                    'comment': document.querySelector('.user-comment-section textarea[name="comment"]').value,
+                                }),
+                                })
+                                .then(response => {
+                                    response.json();
+                                    console.log(response.status)
+                                })
+                                .then(data => console.log(data))
+                                .catch(error => console.error(error));
+                            }
+    
+                            document.addEventListener('DOMContentLoaded', function(event) {
+                                event.preventDefault();
+                                // setInterval(() => {
+                                fetch("{% url 'ue_app:video_detail_comments' video.author.profile.user.username video.slug %}")
+                                .then(response => response.json())
+                                .then(video_comments => {
+                                
+                                });
+                                // }, 1000);
+                            });
+                            console.log('not working !!');
+                        </script>
+
                     </div>
                     {% endif %}
                     {% endfor %}
                 </div>
+            </div>
+            <div class="add-comment-button" onclick="displayCommentContainer()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" style="fill: rgb(255, 153, 0);transform: ;msFilter:;"><path d="M20 2H4c-1.103 0-2 .897-2 2v18l4-4h14c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2zm-3 9h-4v4h-2v-4H7V9h4V5h2v4h4v2z"></path></svg>
             </div>
         </div>
     </div>

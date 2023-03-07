@@ -10,7 +10,8 @@ from ue_app.views.authentication import password_reset_view
 from django.contrib.auth import views as auth_views
 
 app_name = "ue_app"
-
+# video_detail_instance = video_view.VideoDetailView()
+# print(video_detail_instance.get_comments())
 urlpatterns = [
     path('', home_view.HomeView.as_view(), name='home'),
     path(
@@ -96,6 +97,12 @@ urlpatterns = [
         route='video-stories/@<str:username>/<str:slug>',
         view=video_view.VideoDetailView.as_view(),
         name='video_detail'
+    ),
+
+    path(
+        route='video-stories/@<str:username>/<str:slug>/comments',
+        view=video_view.VideoDetailCommentsView.as_view(),
+        name='video_detail_comments'
     ),
     path(
         route='video-stories/<str:username>/<str:slug>/like',

@@ -1,0 +1,17 @@
+
+{% extends 'main/video_detail.html' %}
+<div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function(event) {
+           event.preventDefault();
+           // setInterval(() => {
+               fetch("{% url 'ue_app:video_detail_comments' video.author.profile.user.username video.slug %}")
+               .then(response => response.json())
+               .then(video_comments => {
+                   console.log(video_comments);
+               });
+           // }, 1000);
+       });
+       console.log('not working !!')
+   </script>
+</div>

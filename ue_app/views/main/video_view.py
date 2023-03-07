@@ -45,7 +45,29 @@ class VideoListView(ListView):
 
         return context
 
+from django.core.serializers import serialize
+class VideoDetailCommentsView(DetailView):
+    model = Video
+    template_name = "main/video_detail_comments.html"
+    # form_class = VideoCommentForm
 
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        video_comments = serialize('json', VideoComment.objects.all())
+        
+        context['video_comments'] = video_comments
+        
+        return context
+
+    
+    def render_to_response(self, context, **response_kwargs):
+        if self.request.method == "GET":
+            video_comments = context['video_comments']
+            
+            return JsonResponse(video_comments, safe=False)
+        else:
+            return super().render_to_response(context, **response_kwargs)
+        
 class VideoDetailView(DetailView):
     model = Video
     template_name = "main/video_detail.html"
@@ -65,7 +87,9 @@ class VideoDetailView(DetailView):
         videos = Video.objects.all()
         categories = Category.objects.all()
         channels = Channel.objects.all()
-        video_comments = VideoComment.objects.all()
+        video_comments = VideoComment.objects.filter(parent__isnull=True).order_by('-date_created')
+
+        video_comment_replies = VideoComment.objects.exclude(parent__isnull=True).order_by('-date_created')
 
         context['articles'] = articles
         context['audios'] = audios
@@ -73,21 +97,50 @@ class VideoDetailView(DetailView):
         context['categories'] = categories
         context['channels'] = channels
         context['video_comments'] = video_comments
+        context['video_comment_replies'] = video_comment_replies
         return context
-    
+
+    # def render_to_response(self, context, **response_kwargs):
+    #     if self.request.method == "GET":
+    #         video_comments = list(context['video_comments'].values())
+    #         return JsonResponse(video_comments, safe=False)
+    #     else:
+    #         return super().render_to_response(context, **response_kwargs)
+        
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
-        print(self.object)
+
         comment = request.POST['comment']
         user= request.user
-        new_comment = VideoComment(comment=comment,user=user, video=self.object)
-        new_comment.save()
-        return JsonResponse('New comment added')
+        if request.POST.get('parent_comment', None)==None:
+
+            parent = request.POST.get('parent_comment', None)
+            
+            new_comment = VideoComment(comment=comment,user=user, video=self.object, parent=parent)
+            new_comment.save()
+
+        # video_comments = VideoComment.objects.all()
+
+        
+        # reply = request.POST['reply']
+        
+        # print(parent)
+        # for parent_comment in video_comments:
+            # print(parent_comment.id)
+            # if parent_comment.pk == parent:
+        else:
+            parent = request.POST['parent_comment']
+            parent_cc = get_object_or_404(VideoComment, pk=parent)
+            new_reply = VideoComment(comment=comment,user=user, video=self.object, parent=parent_cc)
+            new_reply.save()
+        return JsonResponse('New comment added', safe=False)
 
     def form_valid(self, form):
         
         form.save()
         return super(VideoDetailView, self).form_valid(form)
+
+
 
 
 class VideoLikeToggleView(RedirectView):
